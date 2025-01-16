@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Projects - Rudram Vyas" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Rudram Vyas</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+    :root {
+      --primary-color: #27374D;
+      --secondary-color: #526D82;
+      --accent-color: #9DB2BF;
+      --light-color: #DDE6ED;
+      --font-family: 'Montserrat', sans-serif;
+    }
+
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    body {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      font-family: var(--font-family);
+      overflow-x: hidden;
+    }
+    :focus {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--light-color);
+    }
+
+    /* ---------- HEADER & NAVBAR ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    header h1 {
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--light-color);
+    }
+    header h1 a {
+      color: var(--light-color);
+      text-decoration: none;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    nav a {
+      color: var(--light-color);
+      font-weight: 500;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    /* ---------- CONTAINER ---------- */
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 7rem;
+      padding-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-color);
+      border-bottom: 2px solid var(--accent-color);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    /* ---------- PROJECTS GRID ---------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .project-card {
+      background-color: var(--secondary-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .project-card:hover {
+      transform: scale(1.02);
+    }
+    .project-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--light-color);
+    }
+    .project-card p {
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+    .project-card a.btn {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+    }
+    .project-card a.btn:hover {
+      background-color: var(--light-color);
+      transform: scale(1.02);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background-color: var(--secondary-color);
+      text-align: center;
+      padding: 1rem 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    }
+    footer p {
+      color: var(--light-color);
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Main navigation">
+    <h1 tabindex="0">
+      <a href="index.html">Rudram Vyas</a>
+    </h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="skills-education.html">Skills & Education</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Highlighted Projects</h2>
+    <p>Explore a few selected projects from my <a href="https://github.com/rudramvyas" target="_blank">GitHub</a> that showcase my work in machine learning, web development, and beyond.</p>
+
+    <div class="projects-grid">
+      <!-- 1) Ensemble_Learning_for_Multi-Modal_MRI_Image_Classification -->
+      <div class="project-card">
+        <h3>Ensemble Learning for Multi-Modal MRI Classification</h3>
+        <p>
+          A deep-learning approach integrating multiple MRI modalities to enhance classification accuracy.
+          Uses ensemble methods and frameworks like PyTorch for robust medical imaging solutions.
+        </p>
+        <a href="https://github.com/RudramVyas/Ensemble_Learning_for_Multi-Modal_MRI_Image_Classification" target="_blank" class="btn">View Repo</a>
+      </div>
+
+      <!-- 2) Snap-Solutions-aka-Chitramanch -->
+      <div class="project-card">
+        <h3>Snap-Solutions (Chitramanch)</h3>
+        <p>
+          A collaborative photo-sharing platform. Features real-time interactions, custom user profiles, and
+          a streamlined UI to encourage creative expression among users.
+        </p>
+        <a href="https://github.com/RudramVyas/Snap-Solutions-aka-Chitramanch" target="_blank" class="btn">View Repo</a>
+      </div>
+
+      <!-- 3) Pothole-Detection -->
+      <div class="project-card">
+        <h3>Pothole Detection</h3>
+        <p>
+          A computer vision-based system to detect potholes in real-time using Python and OpenCV.
+          Aims to improve road safety by alerting drivers and city authorities.
+        </p>
+        <a href="https://github.com/RudramVyas/Pothole-Detection" target="_blank" class="btn">View Repo</a>
+      </div>
+
+      <!-- 4) LAMPT-Social-Networking-Site -->
+      <div class="project-card">
+        <h3>LAMPT Social Networking Site</h3>
+        <p>
+          A full-stack social platform built with Linux, Apache, MySQL, PHP (LAMP), and a touch of TypeScript.
+          Users can create profiles, post updates, and engage with friends online.
+        </p>
+        <a href="https://github.com/RudramVyas/LAMPT-Social-Networking-Site" target="_blank" class="btn">View Repo</a>
+      </div>
+
+      <!-- 5) Workspace-Network-System -->
+      <div class="project-card">
+        <h3>Workspace Network System</h3>
+        <p>
+          A scalable solution for secure file sharing and team collaboration within organizations.
+          Implements Java, Spring Boot, and MySQL for real-time communication channels.
+        </p>
+        <a href="https://github.com/RudramVyas/Workspace-Network-System" target="_blank" class="btn">View Repo</a>
+      </div>
+
+      <!-- 6) OMR_Sheet_Evaluator -->
+      <div class="project-card">
+        <h3>OMR Sheet Evaluator</h3>
+        <p>
+          Optical Mark Recognition for scanning and grading exam sheets automatically.
+          Reduces manual effort and errors in multiple-choice test evaluation using Python-based image processing.
+        </p>
+        <a href="https://github.com/RudramVyas/OMR_Sheet_Evaluator" target="_blank" class="btn">View Repo</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
+  </footer>
+
+  <script>
+    // Update year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Intersection Observer for project cards fade-in
+    const projectCards = document.querySelectorAll('.project-card');
+    const observerOptions = { threshold: 0.1 };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    projectCards.forEach(card => observer.observe(card));
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

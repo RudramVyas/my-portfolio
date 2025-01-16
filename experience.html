@@ -58,6 +58,10 @@
       cursor: pointer;
       color: var(--light-color);
     }
+    header h1 a {
+      color: var(--light-color);
+      text-decoration: none;
+    }
     nav ul {
       display: flex;
       gap: 1.5rem;
@@ -156,11 +160,14 @@
 </head>
 <body>
   <header aria-label="Main navigation">
-    <h1 onclick="scrollToTop()" tabindex="0">Rudram Vyas</h1>
+    <h1 tabindex="0">
+      <a href="index.html">Rudram Vyas</a>
+    </h1>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="experience.html" aria-current="page">Experience</a></li>
+        <li><a href="projects.html">Projects</a></li>
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -173,7 +180,9 @@
     <div class="timeline">
       <!-- ShopR -->
       <div class="timeline-item">
-        <h3>Web Developer @ ShopR, Richmond, VA</h3>
+        <h3>
+          <a href="https://shoprvr.com" target="_blank">Web Developer @ ShopR, Richmond, VA</a>
+        </h3>
         <span>Jun 2024 - Present</span>
         <ul>
           <li>Revamped the corporate site with React & MUI, delivering an intuitive interface and mobile-first design.</li>
@@ -221,11 +230,6 @@
     // Update year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     // Intersection Observer for .timeline-item fade-in
     const items = document.querySelectorAll('.timeline-item');
     const observerOptions = {
@@ -240,6 +244,11 @@
     }, observerOptions);
 
     items.forEach(item => observer.observe(item));
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>

@@ -57,6 +57,10 @@
       cursor: pointer;
       color: var(--light-color);
     }
+    header h1 a {
+      color: var(--light-color);
+      text-decoration: none;
+    }
     nav ul {
       display: flex;
       gap: 1.5rem;
@@ -155,11 +159,14 @@
 </head>
 <body>
   <header aria-label="Main navigation">
-    <h1 onclick="scrollToTop()" tabindex="0">Rudram Vyas</h1>
+    <h1 tabindex="0">
+      <a href="index.html">Rudram Vyas</a>
+    </h1>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="experience.html">Experience</a></li>
+        <li><a href="projects.html">Projects</a></li>
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
       </ul>
@@ -176,7 +183,8 @@
       <p><strong>GitHub:</strong> <a href="https://github.com/rudramvyas" target="_blank">rudramvyas</a></p>
     </div>
 
-    <!-- The form will post to our Node backend at /submit-form -->
+    <!-- The form will post to a backend if you have one,
+         but for GitHub Pages, it will not process server-side. -->
     <form onsubmit="handleSubmit(event)">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required aria-required="true" />
@@ -204,8 +212,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Handle form submission with fetch to our Node server
-    async function handleSubmit(e) {
+    // Example form handler for front-end only
+    function handleSubmit(e) {
       e.preventDefault();
 
       const name = document.getElementById('name').value.trim();
@@ -217,32 +225,10 @@
         return;
       }
 
-      // const body = new URLSearchParams();
-      // body.append('name', name);
-      // body.append('email', email);
-      // body.append('message', message);
-
-      // try {
-      //   const response = await fetch('/submit-form', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded'
-      //     },
-      //     body: body.toString()
-      //   });
-
-      //   const result = await response.json();
-      //   if(result.success) {
-      //     alert('Thank you! Your message has been sent.');
-      //     // Clear the form
-      //     e.target.reset();
-      //   } else {
-      //     alert('Oops! Something went wrong.');
-      //   }
-      // } catch (error) {
-      //   console.error('Error submitting form:', error);
-      //   alert('Error: Could not send message.');
-      // }
+      // In production, you'd send data to your backend or a form service.
+      // For GitHub Pages, you can only simulate success here.
+      alert(`Thank you, ${name}! Your message has been noted.`);
+      e.target.reset();
     }
   </script>
 </body>
