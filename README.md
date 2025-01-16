@@ -52,3 +52,4 @@ Welcome to my **Portfolio Website**! This website showcases my professional jour
 
 ## 📂 Project Structure
 
+my-portfolio/ ├── assets/ │ ├── favicon.svg │ ├── profile-photo.jpg │ └── bg.svg ├── index.html ├── experience.html ├── projects.html ├── skills-education.html ├── contact.html ├── README.md └── LICENSE
