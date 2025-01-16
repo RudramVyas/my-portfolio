@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Experience - Rudram Vyas" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience - Rudram Vyas</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+    :root {
+      --primary-color: #27374D;
+      --secondary-color: #526D82;
+      --accent-color: #9DB2BF;
+      --light-color: #DDE6ED;
+      --font-family: 'Montserrat', sans-serif;
+    }
+
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    body {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      font-family: var(--font-family);
+      overflow-x: hidden;
+    }
+    :focus {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--light-color);
+    }
+
+    /* ---------- HEADER & NAVBAR ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    header h1 {
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--light-color);
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    nav a {
+      color: var(--light-color);
+      font-weight: 500;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 7rem;
+      padding-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+      border-bottom: 2px solid var(--accent-color);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    /* ---------- TIMELINE STYLE ---------- */
+    .timeline {
+      position: relative;
+      margin-top: 2rem;
+      padding: 0 0 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+    .timeline-item {
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-left: 50px;
+      opacity: 0;                /* For Intersection Observer fade-in */
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      background: var(--light-color);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      top: 0.5rem;
+      transform: translateY(-50%);
+    }
+    .timeline-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item span {
+      font-size: 0.9rem;
+      color: var(--accent-color);
+    }
+    .timeline-item ul {
+      list-style: disc;
+      margin-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .timeline-item li {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background-color: var(--secondary-color);
+      text-align: center;
+      padding: 1rem 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    }
+    footer p {
+      color: var(--light-color);
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Main navigation">
+    <h1 onclick="scrollToTop()" tabindex="0">Rudram Vyas</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experience.html" aria-current="page">Experience</a></li>
+        <li><a href="skills-education.html">Skills & Education</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <h2>Professional Experience</h2>
+    <div class="timeline">
+      <!-- ShopR -->
+      <div class="timeline-item">
+        <h3>Web Developer @ ShopR, Richmond, VA</h3>
+        <span>Jun 2024 - Present</span>
+        <ul>
+          <li>Revamped the corporate site with React & MUI, delivering an intuitive interface and mobile-first design.</li>
+          <li>Integrated RESTful APIs for seamless data flow, cutting feature rollout times significantly.</li>
+          <li>Performed resource optimization to reduce server costs by 20% via strategic performance tuning.</li>
+          <li>Introduced code review standards and mentored junior developers, raising overall code quality.</li>
+          <li>Adopted a component-based architecture, slashing future dev overhead by 30%.</li>
+          <li>Enhanced database performance (PostgreSQL) via advanced indexing & partitioning.</li>
+        </ul>
+      </div>
+
+      <!-- State Street Corporation -->
+      <div class="timeline-item">
+        <h3>Software Engineering Intern @ State Street Corporation</h3>
+        <span>Bangalore, India - Boston, MA | Jan 2022 - Jun 2022</span>
+        <ul>
+          <li>Developed Chaos Engineering tests in Java to bolster application resilience under production-like failures.</li>
+          <li>Improved SQL queries for large-scale financial data, shrinking response times while maintaining data integrity.</li>
+          <li>Maintained continuous integration with Git & Agile, guaranteeing smooth front-end to back-end sync.</li>
+        </ul>
+      </div>
+
+      <!-- Metasystems -->
+      <div class="timeline-item">
+        <h3>Software Developer @ Metasystems, India</h3>
+        <span>Jun 2020 - Dec 2021</span>
+        <ul>
+          <li>Crafted dynamic React UI components, empowering interactive and user-friendly data-driven apps.</li>
+          <li>Boosted site performance by 25% with responsive design and cross-browser optimizations.</li>
+          <li>Developed microservices in Spring Boot, scaling with heavy traffic demands.</li>
+          <li>Accelerated analytics by 35% using optimized MongoDB queries and indexing for real-time insights.</li>
+          <li>Coordinated tasks in Jira, ensuring clarity in sprints and timely project deliverables.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
+  </footer>
+
+  <!-- INLINE SCRIPT -->
+  <script>
+    // Update year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Intersection Observer for .timeline-item fade-in
+    const items = document.querySelectorAll('.timeline-item');
+    const observerOptions = {
+      threshold: 0.2
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    items.forEach(item => observer.observe(item));
+  </script>
+</body>
+</html>
