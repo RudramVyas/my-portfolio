@@ -38,18 +38,3 @@ Welcome to my **Portfolio Website**! This website showcases my professional jour
 - **Accessibility:** Built with accessibility best practices to ensure inclusivity.
 - **Custom Domain Support:** Easily configurable to use a personalized domain name.
 
-## 🚀 Technologies Used
-
-- **Frontend:**
-  - HTML5
-  - CSS3 (Flexbox, Grid)
-  - JavaScript (ES6)
-- **Deployment:**
-  - GitHub Pages
-- **Tools & Libraries:**
-  - [Google Fonts](https://fonts.google.com/) - Montserrat
-  - [GitHub](https://github.com/) - Version Control
-
-## 📂 Project Structure
-
-my-portfolio/ ├── assets/ │ ├── favicon.svg │ ├── profile-photo.jpg │ └── bg.svg ├── index.html ├── experience.html ├── projects.html ├── skills-education.html ├── contact.html ├── README.md └── LICENSE
