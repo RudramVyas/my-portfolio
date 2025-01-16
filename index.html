@@ -36,6 +36,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       background-color: var(--primary-color);
       color: var(--light-color);
@@ -57,6 +58,7 @@
     a:hover {
       color: var(--light-color);
     }
+
     ul {
       list-style: none;
     }
@@ -66,7 +68,7 @@
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 9999;
       background-color: var(--secondary-color);
       display: flex;
       align-items: center;
@@ -74,10 +76,12 @@
       padding: 1rem 2rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
+
     header h1 {
       font-size: 1.4rem;
       color: var(--light-color);
       transition: color 0.3s ease;
+      margin-right: 1rem;
     }
     header h1:hover {
       color: var(--accent-color);
@@ -86,17 +90,39 @@
       color: var(--light-color);
       text-decoration: none;
     }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
     nav ul {
       display: flex;
       gap: 1.5rem;
     }
+
     nav li a {
       color: var(--light-color);
       font-weight: 500;
       transition: color 0.3s ease;
     }
+
     nav li a:hover {
       color: var(--accent-color);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .bar {
+      width: 25px;
+      height: 3px;
+      background-color: var(--light-color);
+      transition: all 0.3s;
     }
 
     /* ---------- HERO SECTION (PARALLAX) ---------- */
@@ -116,6 +142,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .hero::before {
       content: "";
       position: absolute;
@@ -127,31 +154,39 @@
       background-size: cover;
       z-index: -1;
     }
+
     .hero-content {
       position: relative;
       opacity: 0;
       transform: translateY(40px);
       animation: fadeUp 1.2s forwards;
+      animation-delay: 0.3s;
     }
+
     .hero h2 {
       font-size: 3rem;
       margin-bottom: 1rem;
       color: var(--light-color);
       font-weight: 700;
     }
+
     .hero p {
       font-size: 1.2rem;
       color: var(--accent-color);
       max-width: 600px;
       margin: 0 auto 2rem;
+      line-height: 1.4;
+      padding: 0 1rem;
     }
-    .hero .button-group {
+
+    .button-group {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
     }
-    .hero button {
+
+    .button-group button {
       background-color: var(--accent-color);
       color: var(--primary-color);
       border: none;
@@ -162,7 +197,8 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
       font-weight: 600;
     }
-    .hero button:hover {
+
+    .button-group button:hover {
       background-color: var(--light-color);
       transform: scale(1.05);
     }
@@ -180,6 +216,7 @@
       width: 100%;
       margin-top: -1px;
     }
+
     .svg-section img {
       display: block;
       width: 100%;
@@ -191,27 +228,61 @@
       background-color: var(--secondary-color);
       text-align: center;
       padding: 1.5rem 0;
-      margin-top: 0;
     }
+
     footer p {
       color: var(--light-color);
+    }
+
+    /* ========== MEDIA QUERIES ========== */
+    @media (max-width: 768px) {
+      nav ul {
+        list-style: none;
+        position: fixed;
+        top: 65px;
+        right: 0;
+        background-color: var(--secondary-color);
+        flex-direction: column;
+        gap: 1rem;
+        padding: 2rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        height: calc(100vh - 65px);
+        width: 200px;
+      }
+
+      nav ul.show-menu {
+        transform: translateX(0);
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      nav ul li {
+        margin: 0;
+      }
     }
   </style>
 </head>
 <body>
   <!-- ======== HEADER & NAVBAR ======== -->
   <header aria-label="Main navigation">
-    <h1 tabindex="0">
-      <a href="index.html">Rudram Vyas</a>
-    </h1>
+    <h1><a href="index.html">Rudram Vyas</a></h1>
     <nav>
-      <ul>
+      <ul id="menu-list">
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="experience.html">Experience</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
+      <!-- Hamburger -->
+      <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
     </nav>
   </header>
 
@@ -225,7 +296,6 @@
         I thrive on solving challenges with innovative code and user-centric design. 
         Let's collaborate to create software that stands out!
       </p>
-            
       <div class="button-group">
         <button onclick="location.href='experience.html'">Check My Experience</button>
         <button onclick="location.href='projects.html'">Check Out My Projects</button>
@@ -248,9 +318,13 @@
     // Set year in footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const menuList = document.getElementById('menu-list');
+
+    hamburger.addEventListener('click', () => {
+      menuList.classList.toggle('show-menu');
+    });
   </script>
 </body>
 </html>
