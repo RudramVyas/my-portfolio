@@ -5,6 +5,10 @@
   <meta name="description" content="Contact - Rudram Vyas" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact - Rudram Vyas</title>
+  
+  <!-- ======== FAVICON ======== -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
@@ -185,18 +189,15 @@
 
     <!-- The form will post to a backend if you have one,
          but for GitHub Pages, it will not process server-side. -->
-    <form onsubmit="handleSubmit(event)">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required aria-required="true" />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required aria-required="true" />
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required aria-required="true"></textarea>
-
-      <button type="submit">Send Message</button>
-    </form>
+         <form onsubmit="handleFormSubmit(event)">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required aria-required="true" />
+        
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required aria-required="true"></textarea>
+        
+          <button type="submit">Send Message</button>
+        </form>
   </div>
 
   <footer>
@@ -204,31 +205,22 @@
   </footer>
 
   <script>
-    // Update year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Example form handler for front-end only
-    function handleSubmit(e) {
-      e.preventDefault();
-
+    function handleFormSubmit(event) {
+      event.preventDefault();
+  
       const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
       const message = document.getElementById('message').value.trim();
-
-      if(!name || !email || !message){
+  
+      if (!name || !message) {
         alert('Please fill out all fields before submitting.');
         return;
       }
-
-      // In production, you'd send data to your backend or a form service.
-      // For GitHub Pages, you can only simulate success here.
-      alert(`Thank you, ${name}! Your message has been noted.`);
-      e.target.reset();
+  
+      // Construct mailto link
+      const mailtoLink = `mailto:rudramvyas06@gmail.com?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
+  
+      // Open the user's email client
+      window.location.href = mailtoLink;
     }
   </script>
 </body>
