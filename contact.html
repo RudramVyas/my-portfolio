@@ -26,11 +26,14 @@
 
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  
+
   <!-- ======== EXTERNAL CSS ======== -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <!-- Transition Overlay -->
+  <div id="transition-overlay" aria-hidden="true"></div>
+
   <!-- ======== HEADER & NAVBAR ======== -->
   <header aria-label="Main navigation">
     <h1><a href="index.html">Rudram Vyas</a></h1>
@@ -61,7 +64,7 @@
       <p><strong>GitHub:</strong> <a href="https://github.com/rudramvyas" target="_blank">rudramvyas</a></p>
     </div>
 
-    <form onsubmit="handleFormSubmit(event)" aria-labelledby="contact-form">
+    <form aria-labelledby="contact-form">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required aria-required="true" />
 
@@ -81,66 +84,7 @@
     <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
   </footer>
 
-  <!-- ======== SCRIPTS ======== -->
-  <script>
-    // Handle form submission
-    function handleFormSubmit(event) {
-      event.preventDefault();
-
-      const name = document.getElementById('name').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      if (!name || !message) {
-        alert('Please fill out all fields before submitting.');
-        return;
-      }
-
-      // Construct mailto link
-      const mailtoLink = `mailto:rudramvyas06@gmail.com?subject=Message from portfolio ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
-
-      // Open the user's email client
-      window.location.href = mailtoLink;
-    }
-
-    // Update year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const menuList = document.getElementById('menu-list');
-
-    hamburger.addEventListener('click', () => {
-      menuList.classList.toggle('show-menu');
-
-      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', !isExpanded);
-    });
-
-    // Intersection Observer
-    document.addEventListener('DOMContentLoaded', () => {
-      const contactInfo = document.querySelector('.contact-info');
-      const form = document.querySelector('form');
-
-      const options = {
-        threshold: 0.2
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, options);
-
-      if (contactInfo) {
-        observer.observe(contactInfo);
-      }
-      if (form) {
-        observer.observe(form);
-      }
-    });
-  </script>
+  <!-- ======== EXTERNAL JS ======== -->
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>

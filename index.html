@@ -59,6 +59,9 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <!-- Transition Overlay -->
+  <div id="transition-overlay" aria-hidden="true"></div>
+
   <!-- ======== HEADER & NAVBAR ======== -->
   <header aria-label="Main navigation">
     <h1><a href="index.html">Rudram Vyas</a></h1>
@@ -71,7 +74,7 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <!-- Hamburger -->
-      <div class="hamburger" id="hamburger">
+      <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="menu-list">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -107,18 +110,7 @@
     <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
   </footer>
 
-  <!-- ======== SCRIPTS ======== -->
-  <script>
-    // Set year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const menuList = document.getElementById('menu-list');
-
-    hamburger.addEventListener('click', () => {
-      menuList.classList.toggle('show-menu');
-    });
-  </script>
+  <!-- ======== EXTERNAL JS ======== -->
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>

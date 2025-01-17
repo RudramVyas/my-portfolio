@@ -31,6 +31,10 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <!-- Transition Overlay -->
+  <div id="transition-overlay" aria-hidden="true"></div>
+
+  <!-- ======== HEADER & NAVBAR ======== -->
   <header aria-label="Main navigation">
     <h1><a href="index.html">Rudram Vyas</a></h1>
     <nav>
@@ -41,7 +45,7 @@
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <div class="hamburger" id="hamburger">
+      <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="menu-list">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -141,29 +145,7 @@
     <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
   </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const projectCards = document.querySelectorAll('.project-card');
-    const observerOptions = { threshold: 0.1 };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    projectCards.forEach(card => observer.observe(card));
-
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const menuList = document.getElementById('menu-list');
-
-    hamburger.addEventListener('click', () => {
-      menuList.classList.toggle('show-menu');
-    });
-  </script>
+  <!-- ======== EXTERNAL JS ======== -->
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
