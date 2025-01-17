@@ -17,12 +17,6 @@ Welcome to my personal portfolio repository. Below is an overview of my professi
 - Enhanced user satisfaction by 15% through strategic UX/UI improvements.
 - Achieved a 50% increase in client inquiries post-launch.
 
-### Software Developer @ Metasystems  
-*Bangalore, India | Jun 2020 - Dec 2021*
-- Designed dynamic React UI components, boosting user interactivity by 25%.
-- Developed scalable microservices using Spring Boot.
-- Improved MongoDB query performance by 35%, enabling real-time insights.
-
 ### Graduate Course Assistant for Algorithms @ University of Massachusetts Lowell  
 *Lowell, MA | Sep 2023 - Dec 2023*
 - Mentored students, resulting in a 15% improvement in course grades.
