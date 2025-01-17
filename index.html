@@ -2,10 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Portfolio website for Rudram Vyas" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rudram Vyas - Portfolio</title>
   
+  <!-- Primary Meta Tags -->
+  <title>Rudram Vyas | Full-Stack Developer Portfolio | React, Node.js, Python</title>
+  <meta name="description" content="Explore Rudram Vyas's portfolio showcasing expertise in full-stack development, machine learning, and innovative project designs. Learn about professional experience, skills, education, and contact information." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/index.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Rudram Vyas | Full-Stack Developer Portfolio" />
+  <meta property="og:description" content="Discover my projects, professional experience, and skills in full-stack development, machine learning, and more." />
+  <meta property="og:image" content="assets/profile-photo.png" />
+  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/index.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rudram Vyas | Full-Stack Developer Portfolio" />
+  <meta name="twitter:description" content="Explore my projects, professional experience, and skills in full-stack development, machine learning, and more." />
+  <meta name="twitter:image" content="assets/profile-photo.png" />
+
+  <!-- Structured Data (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rudram Vyas",
+    "jobTitle": "Full-Stack Developer",
+    "url": "https://rudramvyas.github.io/my-portfolio/index.html",
+    "image": "https://rudramvyas.github.io/my-portfolio/assets/profile-photo.png",
+    "sameAs": [
+      "https://linkedin.com/in/rudram-vyas",
+      "https://github.com/rudramvyas",
+      "mailto:rudramvyas06@gmail.com"
+    ],
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "University of Massachusetts Lowell"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Nirma University"
+      }
+    ]
+  }
+  </script>
+
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
@@ -22,8 +67,6 @@
       --accent-color: #9DB2BF;        /* rgb(157, 178, 191) */
       --light-color: #DDE6ED;         /* rgb(221, 230, 237) */
       --font-family: 'Montserrat', sans-serif;
-
-      /* For parallax hero */
       --hero-bg: linear-gradient(
         to bottom,
         rgba(39, 55, 77, 0.7),
@@ -44,7 +87,6 @@
       overflow-x: hidden;
     }
 
-    /* Accessibility: Outline focus for keyboard navigation */
     :focus {
       outline: 3px solid var(--accent-color);
       outline-offset: 2px;
@@ -55,6 +97,7 @@
       color: var(--accent-color);
       transition: color 0.3s ease;
     }
+
     a:hover {
       color: var(--light-color);
     }
@@ -83,9 +126,11 @@
       transition: color 0.3s ease;
       margin-right: 1rem;
     }
+
     header h1:hover {
       color: var(--accent-color);
     }
+
     header h1 a {
       color: var(--light-color);
       text-decoration: none;
@@ -111,13 +156,13 @@
       color: var(--accent-color);
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
       gap: 5px;
     }
+
     .bar {
       width: 25px;
       height: 3px;
@@ -166,7 +211,6 @@
       animation-delay: 0.3s;
     }
 
-    /* New: Profile Photo Styling */
     .profile-photo {
       width: 200px;
       height: 200px;
@@ -255,7 +299,6 @@
       color: var(--light-color);
     }
 
-    /* ========== MEDIA QUERIES ========== */
     @media (max-width: 768px) {
       nav ul {
         list-style: none;
@@ -280,7 +323,6 @@
         display: flex;
       }
 
-      /* Adjust hero-content for smaller screens */
       .hero-content {
         max-width: 90%;
       }
@@ -325,7 +367,9 @@
   <div class="hero" role="banner">
     <div class="hero-content">
       <!-- Profile Photo -->
-      <img src="assets/profile-photo.png" alt="Profile Photo of Rudram Vyas" class="profile-photo">
+      <img src="assets/profile-photo.png" 
+           alt="Rudram Vyas - Full-Stack Developer with expertise in React and Node.js" 
+           class="profile-photo">
       
       <h2>Hi, I'm Rudram</h2>
       <p>
@@ -343,7 +387,7 @@
 
   <!-- ======== SVG WAVE SECTION ======== -->
   <div class="svg-section" aria-hidden="true">
-    <img src="assets/bg.svg" alt="" />
+    <img src="assets/bg.svg" alt="Decorative SVG background" />
   </div>
 
   <!-- ======== FOOTER ======== -->

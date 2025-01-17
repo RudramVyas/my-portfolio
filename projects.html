@@ -2,10 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Projects - Rudram Vyas" />
+
+  <!-- Primary Meta Tags -->
+  <title>Projects | Rudram Vyas - Full-Stack & ML Enthusiast</title>
+  <meta name="description" content="Browse highlighted projects by Rudram Vyas, covering full-stack development, machine learning, web apps, and more." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects - Rudram Vyas</title>
-  
+
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/projects.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Projects | Rudram Vyas" />
+  <meta property="og:description" content="Explore an array of projects built by Rudram Vyas in areas such as full-stack web development, machine learning, and more." />
+  <meta property="og:image" content="assets/profile-photo.png" />
+  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/projects.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Projects | Rudram Vyas" />
+  <meta name="twitter:description" content="Explore an array of projects built by Rudram Vyas in areas such as full-stack web development, machine learning, and more." />
+  <meta name="twitter:image" content="assets/profile-photo.png" />
+
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
@@ -25,16 +43,19 @@
       padding: 0; 
       box-sizing: border-box;
     }
+
     body {
       background-color: var(--primary-color);
       color: var(--light-color);
       font-family: var(--font-family);
       overflow-x: hidden;
     }
+
     :focus {
       outline: 3px solid var(--accent-color);
       outline-offset: 2px;
     }
+
     a {
       color: var(--accent-color);
       text-decoration: none;
@@ -44,7 +65,6 @@
       color: var(--light-color);
     }
 
-    /* ---------- HEADER & NAVBAR ---------- */
     header {
       position: fixed;
       top: 0;
@@ -84,7 +104,6 @@
       font-weight: 500;
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -98,7 +117,6 @@
       transition: all 0.3s;
     }
 
-    /* ---------- CONTAINER ---------- */
     .container {
       width: 90%;
       max-width: 1100px;
@@ -121,7 +139,6 @@
       margin-bottom: 2rem;
     }
 
-    /* ---------- PROJECTS GRID ---------- */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -168,7 +185,6 @@
       transform: scale(1.02);
     }
 
-    /* ---------- FOOTER ---------- */
     footer {
       background-color: var(--secondary-color);
       text-align: center;
@@ -179,7 +195,6 @@
       color: var(--light-color);
     }
 
-    /* ========== MEDIA QUERIES ========== */
     @media (max-width: 768px) {
       nav ul {
         list-style: none;
@@ -215,7 +230,6 @@
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <!-- Hamburger -->
       <div class="hamburger" id="hamburger">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -227,7 +241,8 @@
   <div class="container">
     <h2>Highlighted Projects</h2>
     <p>
-      Explore a few selected projects from my <a href="https://github.com/rudramvyas" target="_blank">GitHub</a> 
+      Explore a few selected projects from my 
+      <a href="https://github.com/rudramvyas" target="_blank">GitHub</a> 
       that showcase my work in machine learning, web development, and beyond.
     </p>
 
@@ -312,10 +327,8 @@
   </footer>
 
   <script>
-    // Update year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Intersection Observer for project cards fade-in
     const projectCards = document.querySelectorAll('.project-card');
     const observerOptions = { threshold: 0.1 };
 
