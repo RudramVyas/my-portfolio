@@ -2,10 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Skills & Education - Rudram Vyas" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills & Education - Rudram Vyas</title>
   
+  <!-- Primary Meta Tags -->
+  <title>Skills & Education | Rudram Vyas - Full-Stack Developer</title>
+  <meta name="description" content="Learn about Rudram Vyas's technical skills, programming expertise, and educational background in Computer Science." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/skills-education.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Skills & Education | Rudram Vyas" />
+  <meta property="og:description" content="Discover Rudram Vyas's skills, experience with frameworks, databases, cloud platforms, and his educational background." />
+  <meta property="og:image" content="assets/profile-photo.png" />
+  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/skills-education.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Skills & Education | Rudram Vyas" />
+  <meta name="twitter:description" content="Explore Rudram Vyas's extensive skill set in software development, DevOps, databases, leadership, and more." />
+  <meta name="twitter:image" content="assets/profile-photo.png" />
+
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
@@ -44,7 +62,6 @@
       color: var(--light-color);
     }
 
-    /* ---------- HEADER & NAVBAR ---------- */
     header {
       position: fixed;
       top: 0;
@@ -84,7 +101,6 @@
       font-weight: 500;
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -106,7 +122,6 @@
       padding-bottom: 3rem;
     }
 
-    /* ---------- SECTION TITLES ---------- */
     h2 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
@@ -116,7 +131,6 @@
       padding-bottom: 0.5rem;
     }
 
-    /* ---------- SKILLS GRID ---------- */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -151,7 +165,6 @@
       line-height: 1.4;
     }
 
-    /* ---------- EDUCATION SECTION ---------- */
     .education-section {
       margin-top: 3rem;
     }
@@ -182,7 +195,6 @@
       font-size: 0.9rem;
     }
 
-    /* ---------- FOOTER ---------- */
     footer {
       background-color: var(--secondary-color);
       text-align: center;
@@ -194,7 +206,6 @@
       color: var(--light-color);
     }
 
-    /* ========== MEDIA QUERIES ========== */
     @media (max-width: 768px) {
       nav ul {
         list-style: none;
@@ -230,7 +241,6 @@
         <li><a href="skills-education.html" aria-current="page">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <!-- Hamburger -->
       <div class="hamburger" id="hamburger">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -300,7 +310,6 @@
         </ul>
       </div>
 
-      <!-- New Skill Card: Leadership & Management -->
       <div class="skill-card">
         <h3>Leadership & Management</h3>
         <ul>
@@ -311,7 +320,6 @@
         </ul>
       </div>
 
-      <!-- New Skill Card: Customer Service -->
       <div class="skill-card">
         <h3>Customer Service</h3>
         <ul>
@@ -342,15 +350,8 @@
   </footer>
 
   <script>
-    // Update year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Intersection Observer
     const skillCards = document.querySelectorAll('.skill-card');
     const eduItems = document.querySelectorAll('.education-item');
 

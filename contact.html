@@ -2,10 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Contact - Rudram Vyas" />
+
+  <!-- Primary Meta Tags -->
+  <title>Contact | Rudram Vyas - Full-Stack Developer</title>
+  <meta name="description" content="Get in touch with Rudram Vyas for collaborations, opportunities, or general inquiries. Phone, email, and LinkedIn details provided." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact - Rudram Vyas</title>
   
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/contact.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Contact | Rudram Vyas" />
+  <meta property="og:description" content="Reach out to Rudram Vyas for development collaborations or professional opportunities. Contact via phone, email, or LinkedIn." />
+  <meta property="og:image" content="assets/profile-photo.png" />
+  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/contact.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact | Rudram Vyas" />
+  <meta name="twitter:description" content="Connect with Rudram Vyas to discuss software development, full-stack projects, or potential collaborations." />
+  <meta name="twitter:image" content="assets/profile-photo.png" />
+
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
@@ -22,14 +40,12 @@
       --transition-speed: 0.3s;
     }
 
-    /* Reset and Box Sizing */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Flexbox Layout for Sticky Footer */
     body {
       display: flex;
       flex-direction: column;
@@ -40,7 +56,6 @@
       overflow-x: hidden;
     }
 
-    /* Accessibility: Outline focus for keyboard navigation */
     :focus {
       outline: 3px solid var(--accent-color);
       outline-offset: 2px;
@@ -55,7 +70,6 @@
       color: var(--light-color);
     }
 
-    /* ---------- HEADER & NAVBAR ---------- */
     header {
       position: fixed;
       top: 0;
@@ -79,7 +93,6 @@
     header h1:hover {
       color: var(--accent-color);
     }
-
     header h1 a {
       color: var(--light-color);
       text-decoration: none;
@@ -106,7 +119,6 @@
       color: var(--accent-color);
     }
 
-    /* Hamburger Menu (Mobile) */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -120,10 +132,9 @@
       transition: all 0.3s;
     }
 
-    /* ---------- MAIN CONTENT ---------- */
     .content-wrapper {
-      flex: 1; /* Pushes footer to the bottom */
-      padding-top: 7rem; /* Height of the fixed header */
+      flex: 1;
+      padding-top: 7rem;
       padding-bottom: 2rem;
       width: 90%;
       max-width: 600px;
@@ -140,20 +151,8 @@
       border-bottom: 2px solid var(--accent-color);
       display: inline-block;
       padding-bottom: 0.5rem;
-
-      /* font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-      border-bottom: 2px solid var(--accent-color);
-      display: inline-block;
-      padding-bottom: 0.5rem;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0s forwards;
-      animation-delay: 0.1s; */
     }
 
-    /* Contact Info Animation */
     .contact-info {
       font-size: 1rem;
       line-height: 1.6;
@@ -167,7 +166,6 @@
       margin-bottom: 0.5rem;
     }
 
-    /* Contact Form Animation */
     form {
       display: flex;
       flex-direction: column;
@@ -223,7 +221,6 @@
       transform: scale(1.05);
     }
 
-    /* ---------- FOOTER ---------- */
     footer {
       background-color: var(--secondary-color);
       text-align: center;
@@ -235,7 +232,6 @@
       color: var(--light-color);
     }
 
-    /* ========== ANIMATIONS ========== */
     @keyframes fadeUp {
       to {
         opacity: 1;
@@ -243,7 +239,6 @@
       }
     }
 
-    /* ========== MEDIA QUERIES ========== */
     @media (max-width: 768px) {
       nav ul {
         list-style: none;
@@ -267,7 +262,6 @@
         display: flex;
       }
 
-      /* Adjust content-wrapper padding for smaller screens */
       .content-wrapper {
         padding: 7rem 1rem 2rem;
       }
@@ -286,7 +280,6 @@
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
       </ul>
-      <!-- Hamburger Menu for Mobile -->
       <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="menu-list">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -353,12 +346,11 @@
     hamburger.addEventListener('click', () => {
       menuList.classList.toggle('show-menu');
 
-      // Update ARIA attributes for accessibility
       const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
       hamburger.setAttribute('aria-expanded', !isExpanded);
     });
 
-    // Animation using Intersection Observer
+    // Intersection Observer
     document.addEventListener('DOMContentLoaded', () => {
       const contactInfo = document.querySelector('.contact-info');
       const form = document.querySelector('form');

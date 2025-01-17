@@ -2,10 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Experience - Rudram Vyas" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experience - Rudram Vyas</title>
   
+  <!-- Primary Meta Tags -->
+  <title>Experience | Rudram Vyas - Full-Stack Developer</title>
+  <meta name="description" content="Explore Rudram Vyas's professional experience including roles at ShopR, State Street, Metasystems, Chitramanch, and more." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/experience.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Experience | Rudram Vyas" />
+  <meta property="og:description" content="Highlights of Rudram Vyas's professional journey, including roles at ShopR, State Street, Metasystems, and Chitramanch." />
+  <meta property="og:image" content="assets/profile-photo.png" />
+  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/experience.html" />
+  <meta property="og:type" content="article" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Experience | Rudram Vyas" />
+  <meta name="twitter:description" content="Highlights of Rudram Vyas's professional journey, including roles at ShopR, State Street, Metasystems, and Chitramanch." />
+  <meta name="twitter:image" content="assets/profile-photo.png" />
+
   <!-- ======== FAVICON ======== -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
@@ -47,7 +65,6 @@
       color: var(--light-color);
     }
 
-    /* ---------- HEADER & NAVBAR ---------- */
     header {
       position: fixed;
       top: 0;
@@ -89,13 +106,13 @@
       font-weight: 500;
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
       gap: 5px;
     }
+
     .bar {
       width: 25px;
       height: 3px;
@@ -103,7 +120,6 @@
       transition: all 0.3s;
     }
 
-    /* ---------- CONTAINER ---------- */
     .container {
       width: 90%;
       max-width: 1100px;
@@ -121,7 +137,6 @@
       padding-bottom: 0.5rem;
     }
 
-    /* ---------- TIMELINE STYLE ---------- */
     .timeline {
       position: relative;
       margin-top: 2rem;
@@ -143,7 +158,7 @@
       margin-bottom: 2.5rem;
       position: relative;
       padding-left: 50px;
-      opacity: 0;    /* For Intersection Observer fade-in */
+      opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
@@ -171,7 +186,6 @@
       color: var(--light-color);
     }
 
-    /* Flexbox Alignment for Clickable Links */
     .timeline-item h3 a {
       display: inline-flex;
       align-items: center;
@@ -179,7 +193,6 @@
       text-decoration: none;
     }
 
-    /* Arrow Indicator Styling */
     .timeline-item h3 a::after {
       content: '→';
       color: var(--accent-color);
@@ -188,7 +201,6 @@
       transition: transform 0.2s ease;
     }
 
-    /* Optional: Slight Arrow Animation on Hover */
     .timeline-item h3 a:hover::after {
       transform: translateX(4px);
     }
@@ -207,7 +219,6 @@
       line-height: 1.4;
     }
 
-    /* ---------- FOOTER ---------- */
     footer {
       background-color: var(--secondary-color);
       text-align: center;
@@ -219,7 +230,6 @@
       color: var(--light-color);
     }
 
-    /* ========== MEDIA QUERIES ========== */
     @media (max-width: 768px) {
       nav ul {
         list-style: none;
@@ -267,7 +277,6 @@
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <!-- Hamburger -->
       <div class="hamburger" id="hamburger">
         <div class="bar"></div>
         <div class="bar"></div>
@@ -276,7 +285,6 @@
     </nav>
   </header>
 
-  <!-- MAIN CONTENT -->
   <div class="container">
     <h2>Professional Experience</h2>
     <div class="timeline">
@@ -370,17 +378,13 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
   </footer>
 
-  <!-- INLINE SCRIPT -->
   <script>
-    // Update year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Intersection Observer for .timeline-item fade-in
     const items = document.querySelectorAll('.timeline-item');
     const observerOptions = {
       threshold: 0.2
