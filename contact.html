@@ -2,288 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
-  <!-- Primary Meta Tags -->
-  <title>Contact | Rudram Vyas - Full-Stack Developer</title>
-  <meta name="description" content="Get in touch with Rudram Vyas for collaborations, opportunities, or general inquiries. Phone, email, and LinkedIn details provided." />
+  <title>Contact | Rudram Vyas</title>
+  <meta name="description" content="Get in touch with Rudram Vyas for collaborations, opportunities, or general inquiries." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Canonical Link -->
-  <link rel="canonical" href="https://rudramvyas.github.io/my-portfolio/contact.html" />
 
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Contact | Rudram Vyas" />
-  <meta property="og:description" content="Reach out to Rudram Vyas for development collaborations or professional opportunities. Contact via phone, email, or LinkedIn." />
-  <meta property="og:image" content="assets/profile-photo.png" />
-  <meta property="og:url" content="https://rudramvyas.github.io/my-portfolio/contact.html" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Contact | Rudram Vyas" />
-  <meta name="twitter:description" content="Connect with Rudram Vyas to discuss software development, full-stack projects, or potential collaborations." />
-  <meta name="twitter:image" content="assets/profile-photo.png" />
-
-  <!-- ======== FAVICON ======== -->
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  
-  <!-- ======== FONTS ======== -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/style.css"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-
-    :root {
-      --primary-color: #27374D;
-      --secondary-color: #526D82;
-      --accent-color: #9DB2BF;
-      --light-color: #DDE6ED;
-      --font-family: 'Montserrat', sans-serif;
-      --transition-speed: 0.3s;
-    }
-
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background-color: var(--primary-color);
-      color: var(--light-color);
-      font-family: var(--font-family);
-      overflow-x: hidden;
-    }
-
-    :focus {
-      outline: 3px solid var(--accent-color);
-      outline-offset: 2px;
-    }
-
-    a {
-      color: var(--accent-color);
-      text-decoration: none;
-      transition: color var(--transition-speed) ease;
-    }
-    a:hover {
-      color: var(--light-color);
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 9999;
-      background-color: var(--secondary-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    }
-
-    header h1 {
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: var(--light-color);
-      margin-right: 1rem;
-      transition: color var(--transition-speed) ease;
-    }
-    header h1:hover {
-      color: var(--accent-color);
-    }
-    header h1 a {
-      color: var(--light-color);
-      text-decoration: none;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    nav li a {
-      color: var(--light-color);
-      font-weight: 500;
-      transition: color var(--transition-speed) ease;
-    }
-
-    nav li a:hover {
-      color: var(--accent-color);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 5px;
-    }
-    .bar {
-      width: 25px;
-      height: 3px;
-      background-color: var(--light-color);
-      transition: all 0.3s;
-    }
-
-    .content-wrapper {
-      flex: 1;
-      padding-top: 7rem;
-      padding-bottom: 2rem;
+    .contact-wrapper {
       width: 90%;
-      max-width: 600px;
-      min-height: 100vh;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      max-width: 800px;
+      margin: 6rem auto 4rem;
     }
-
-    h2 {
+    .contact-heading {
       font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: var(--accent-color);
-      border-bottom: 2px solid var(--accent-color);
-      display: inline-block;
-      padding-bottom: 0.5rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
     }
-
-    .contact-info {
-      font-size: 1rem;
-      line-height: 1.6;
+    .contact-box {
+      background: #1F2833;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(69,162,158,0.1);
+      padding: 2rem;
       opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0.5s forwards;
-      animation-delay: 0.1s;
+      transform: translateY(10px);
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
-
+    .contact-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .contact-box h2 {
+      color: var(--heading-color);
+      margin-bottom: 1rem;
+    }
+    .contact-info {
+      margin-bottom: 2rem;
+    }
     .contact-info p {
       margin-bottom: 0.5rem;
     }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background-color: var(--secondary-color);
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0.5s forwards;
-      animation-delay: 0.1s;
+    .contact-info a {
+      color: var(--primary-accent);
+      font-weight: 600;
+      transition: color var(--transition-speed);
+    }
+    .contact-info a:hover {
+      color: var(--heading-color);
     }
 
-    label {
+    .contact-form label {
       font-weight: 600;
       margin-bottom: 0.2rem;
-    }
-
-    input, textarea {
-      font-family: var(--font-family);
-      padding: 0.5rem;
-      border: none;
-      border-radius: 4px;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    input[type="text"] {
-      height: 40px;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    button[type="submit"] {
-      background-color: var(--accent-color);
-      color: var(--primary-color);
-      border: none;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-      align-self: flex-start;
-    }
-
-    button[type="submit"]:hover {
-      background-color: var(--light-color);
-      transform: scale(1.05);
-    }
-  
-    .svg-section {
-      position: relative;
-      width: 100%;
-      margin-top: -1px;
-    }
-
-    .svg-section img {
       display: block;
+      color: var(--heading-color);
+    }
+    .contact-form input,
+    .contact-form textarea {
       width: 100%;
-      height: auto;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      background: #0B0C10;
+      border: 2px solid #45A29E;
+      border-radius: 8px;
+      color: var(--text-color);
+      outline: none;
+      transition: border var(--transition-speed);
     }
-
-    footer {
-      background-color: var(--secondary-color);
-      text-align: center;
-      padding: 1rem 0;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border: 2px solid var(--primary-accent);
     }
-
-    footer p {
-      color: var(--light-color);
+    .contact-form button {
+      background: var(--primary-accent);
+      color: #0B0C10;
+      padding: 0.8rem 1.5rem;
+      border-radius: 24px;
+      font-weight: 600;
+      transition: background var(--transition-speed), transform var(--transition-speed);
     }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        list-style: none;
-        position: fixed;
-        top: 65px;
-        right: 0;
-        background-color: var(--secondary-color);
-        flex-direction: column;
-        gap: 1rem;
-        padding: 2rem;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        height: calc(100vh - 65px);
-        width: 200px;
-      }
-      nav ul.show-menu {
-        transform: translateX(0);
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .content-wrapper {
-        padding: 7rem 1rem 2rem;
-      }
+    .contact-form button:hover {
+      background: var(--secondary-accent);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <!-- ======== HEADER & NAVBAR ======== -->
-  <header aria-label="Main navigation">
+  <header>
     <h1><a href="index.html">Rudram Vyas</a></h1>
     <nav>
       <ul id="menu-list">
@@ -293,7 +100,7 @@
         <li><a href="skills-education.html">Skills & Education</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
       </ul>
-      <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="menu-list">
+      <div class="hamburger" id="hamburger" aria-expanded="false" aria-label="Toggle navigation">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -301,96 +108,51 @@
     </nav>
   </header>
 
-  <!-- ======== MAIN CONTENT ======== -->
-  <div class="content-wrapper">
-    <h2>Contact Me</h2>
-    <div class="contact-info">
-      <p>Feel free to drop a message below or reach out via phone or email.<br/> Looking forward to connect!</p>
-      <p><strong>Phone:</strong> <a href="tel:+19783758413">+1 (978) 375-8413</a></p>
-      <p><strong>Email:</strong> <a href="mailto:rudramvyas06@gmail.com">rudramvyas06@gmail.com</a></p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rudram-vyas" target="_blank">rudram-vyas</a></p>
-      <p><strong>GitHub:</strong> <a href="https://github.com/rudramvyas" target="_blank">rudramvyas</a></p>
+  <main class="contact-wrapper fade-in">
+    <h2 class="contact-heading">Contact Me</h2>
+    <div class="contact-box fade-in">
+      <div class="contact-info">
+        <p><strong>Phone:</strong> <a href="tel:+19783758413">+1 (978) 375-8413</a></p>
+        <p><strong>Email:</strong> <a href="mailto:rudramvyas06@gmail.com">rudramvyas06@gmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rudram-vyas" target="_blank">rudram-vyas</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/rudramvyas" target="_blank">rudramvyas</a></p>
+        <p>
+          Let's collaborate on exciting projects or talk about new ideas. 
+          I'm always open to opportunities and interesting challenges!
+        </p>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" required/>
+
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
     </div>
+  </main>
 
-    <form onsubmit="handleFormSubmit(event)" aria-labelledby="contact-form">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required aria-required="true" />
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required aria-required="true"></textarea>
-
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-  
-  <div class="svg-section" aria-hidden="true">
-    <img src="assets/bg.svg" alt="Decorative SVG background" />
-  </div>
-
-  <!-- ======== FOOTER ======== -->
   <footer>
-    <p>&copy; <span id="year"></span> | Built with passion by Rudram Vyas</p>
+    <p>&copy; <span id="year"></span> | Designed by Rudram Vyas</p>
   </footer>
 
-  <!-- ======== SCRIPTS ======== -->
+  <script src="assets/scripts.js"></script>
   <script>
-    // Handle form submission
-    function handleFormSubmit(event) {
-      event.preventDefault();
-
+    // Simple form handling
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
       const name = document.getElementById('name').value.trim();
-      const message = document.getElementById('message').value.trim();
+      const msg = document.getElementById('message').value.trim();
 
-      if (!name || !message) {
-        alert('Please fill out all fields before submitting.');
+      if(!name || !msg) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      // Construct mailto link
-      const mailtoLink = `mailto:rudramvyas06@gmail.com?subject=Message from portfolio ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
-
-      // Open the user's email client
-      window.location.href = mailtoLink;
-    }
-
-    // Update year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const menuList = document.getElementById('menu-list');
-
-    hamburger.addEventListener('click', () => {
-      menuList.classList.toggle('show-menu');
-
-      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', !isExpanded);
-    });
-
-    // Intersection Observer
-    document.addEventListener('DOMContentLoaded', () => {
-      const contactInfo = document.querySelector('.contact-info');
-      const form = document.querySelector('form');
-
-      const options = {
-        threshold: 0.2
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, options);
-
-      if (contactInfo) {
-        observer.observe(contactInfo);
-      }
-      if (form) {
-        observer.observe(form);
-      }
+      const mailto = `mailto:rudramvyas06@gmail.com?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg)}`;
+      window.location.href = mailto;
     });
   </script>
 </body>
