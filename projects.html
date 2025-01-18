@@ -152,13 +152,17 @@
       transition: transform 0.8s ease;
       opacity: 0;
       transform: translateY(40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .project-card.visible {
       opacity: 1;
       transform: translateY(0);
     }
     .project-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-10px);
+      transition: transform 0.2s ease;
     }
     .project-card h3 {
       font-size: 1.2rem;
@@ -179,6 +183,7 @@
       margin-top: 0.5rem;
       transition: background-color 0.3s ease, transform 0.3s ease;
       text-decoration: none;
+      align-self: flex-start;
     }
     .project-card a.btn:hover {
       background-color: var(--light-color);
@@ -228,6 +233,10 @@
       }
       .hamburger {
         display: flex;
+      }
+      .project-card a.btn {
+        text-align: center;
+        width: 100%;
       }
     }
   </style>
