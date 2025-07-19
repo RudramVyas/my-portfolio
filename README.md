@@ -15,7 +15,7 @@ Welcome to my personal portfolio repository. Below is an overview of my professi
 *Vadodara, India | Jan 2021 - Jul 2022*
 - Developed a photography marketplace using React, Node.js, and MongoDB.
 - Enhanced user satisfaction by 15% through strategic UX/UI improvements.
-- Achieved a 50% increase in client inquiries post-launch.
+- Achieved a 50% increase in client inquiries post-launch. 
 
 ### Graduate Course Assistant for Algorithms @ University of Massachusetts Lowell  
 *Lowell, MA | Sep 2023 - Dec 2023*
