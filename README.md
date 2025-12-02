@@ -4,7 +4,7 @@ Welcome to my personal portfolio repository. Below is an overview of my professi
 
 ## 👨‍💻 Professional Experience
 
-### Web Developer @ [ShopR](https://shoprvr.com)  
+### Software Engineer @ [ShopR](https://shoprvr.com)  
 *Richmond, VA | Jun 2024 - Present*
 - Led the redesign of the corporate site using React and Material-UI, increasing user engagement by 40%.
 - Integrated REST APIs, accelerating feature rollout by 50%.
