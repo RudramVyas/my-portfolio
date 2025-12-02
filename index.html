@@ -75,29 +75,204 @@
   </script>
   
   <style>
-    /* Subtle animated background */
-    body {
-      background: #0a0a0f;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(88, 28, 135, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+    /* ===== CSS Variables for Theming ===== */
+    :root {
+      /* Dark Mode (Default) */
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #0d0d14;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.05);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(168, 85, 247, 0.2);
+      --nav-bg: rgba(10, 10, 15, 0.8);
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --orb-opacity: 0.5;
+      --grid-color: rgba(255, 255, 255, 0.02);
+      --scrollbar-track: #0a0a0f;
+      --overlay-bg: rgba(0, 0, 0, 0.8);
     }
-    
+
+    [data-theme="light"] {
+      /* Light Mode */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.7);
+      --bg-card-hover: rgba(255, 255, 255, 0.9);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(168, 85, 247, 0.3);
+      --nav-bg: rgba(248, 250, 252, 0.9);
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --orb-opacity: 0.3;
+      --grid-color: rgba(0, 0, 0, 0.03);
+      --scrollbar-track: #f1f5f9;
+      --overlay-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Base background */
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Background wrapper with effects */
+    .bg-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Static gradient base - Dark */
+    .bg-gradient-base {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 28, 135, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(59, 130, 246, 0.1), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 100%, rgba(139, 92, 246, 0.08), transparent),
+        linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+      transition: background 0.3s ease;
+    }
+
+    [data-theme="light"] .bg-gradient-base {
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.06), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37, 99, 235, 0.05), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 100%, rgba(139, 92, 246, 0.04), transparent),
+        linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+    }
+
+    /* Light mode orbs - softer pastel colors */
+    [data-theme="light"] .bg-orb-1 {
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.2) 0%, transparent 70%) !important;
+    }
+
+    [data-theme="light"] .bg-orb-2 {
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.18) 0%, transparent 70%) !important;
+    }
+
+    [data-theme="light"] .bg-orb-3 {
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.15) 0%, transparent 70%) !important;
+    }
+
+    /* Floating orbs */
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: var(--orb-opacity);
+      animation: float 20s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+    }
+
+    .bg-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .bg-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      top: 20%;
+      right: -15%;
+      animation-delay: -7s;
+      animation-duration: 25s;
+    }
+
+    .bg-orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      bottom: 10%;
+      left: 20%;
+      animation-delay: -14s;
+      animation-duration: 22s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(20px, 10px) scale(1.02); }
+    }
+
+    /* Subtle grid pattern */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+      transition: background-image 0.3s ease;
+    }
+
+    /* Noise texture overlay */
+    .bg-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    [data-theme="light"] .bg-noise {
+      opacity: 0.02;
+    }
+
+    /* Spotlight effect on hero */
+    .bg-spotlight {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      background: radial-gradient(ellipse 50% 30% at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    [data-theme="light"] .bg-spotlight {
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(124, 58, 237, 0.04) 0%, transparent 100%);
+    }
+
+    /* Light mode scrollbar */
+    [data-theme="light"] ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #a78bfa 0%, #60a5fa 100%);
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #8b5cf6 0%, #3b82f6 100%);
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #0a0a0f;
+      background: var(--scrollbar-track);
     }
     ::-webkit-scrollbar-thumb {
-      background: #1f1f2e;
+      background: linear-gradient(180deg, #a855f7 0%, #3b82f6 100%);
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #2d2d44;
+      background: linear-gradient(180deg, #c084fc 0%, #60a5fa 100%);
     }
 
     /* Gradient text */
@@ -110,14 +285,15 @@
 
     /* Glass effect */
     .glass {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--bg-card);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .glass-hover:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(168, 85, 247, 0.2);
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
     }
 
     /* Smooth transitions */
@@ -128,17 +304,379 @@
     /* Mobile menu overlay */
     #mobile-menu-overlay {
       backdrop-filter: blur(8px);
-      background: rgba(0, 0, 0, 0.8);
+      background: var(--overlay-bg);
     }
 
     /* Hide scrollbar when mobile menu is open */
     body.menu-open {
       overflow: hidden;
     }
+
+    /* Glow effect for sections on scroll */
+    section {
+      position: relative;
+    }
+
+    /* Subtle section dividers */
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    section:not(#home)::before {
+      opacity: 1;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+      transform: scale(1.05);
+    }
+
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle .icon-sun {
+      color: #fbbf24;
+      transform: rotate(0deg) scale(1);
+      opacity: 0;
+    }
+
+    .theme-toggle .icon-moon {
+      color: #a855f7;
+      transform: rotate(0deg) scale(1);
+      opacity: 1;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-sun {
+      transform: rotate(360deg) scale(1);
+      opacity: 1;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      transform: rotate(-90deg) scale(0);
+      opacity: 0;
+    }
+
+    /* ===== LIGHT MODE COMPREHENSIVE OVERRIDES ===== */
+    
+    /* Light mode text color adjustments */
+    [data-theme="light"] .text-white {
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] .text-gray-100 {
+      color: #1e293b !important;
+    }
+
+    [data-theme="light"] .text-gray-300 {
+      color: #334155 !important;
+    }
+
+    [data-theme="light"] .text-gray-400 {
+      color: #475569 !important;
+    }
+
+    [data-theme="light"] .text-gray-500 {
+      color: #64748b !important;
+    }
+
+    /* IMPORTANT: Keep white text on gradient CTA buttons */
+    [data-theme="light"] a.bg-gradient-to-r,
+    [data-theme="light"] button.bg-gradient-to-r,
+    [data-theme="light"] .bg-gradient-to-r.from-purple-600,
+    [data-theme="light"] .bg-gradient-to-r.from-purple-500 {
+      color: #ffffff !important;
+    }
+
+    [data-theme="light"] a.bg-gradient-to-r *,
+    [data-theme="light"] button.bg-gradient-to-r * {
+      color: #ffffff !important;
+    }
+
+    /* Gradient text - darker and more vivid in light mode */
+    [data-theme="light"] .gradient-text {
+      background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* Nav in light mode */
+    [data-theme="light"] nav {
+      background: rgba(255, 255, 255, 0.85) !important;
+      border-color: rgba(0, 0, 0, 0.06) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    /* Cards and containers in light mode */
+    [data-theme="light"] .glass {
+      background: rgba(255, 255, 255, 0.8) !important;
+      border-color: rgba(0, 0, 0, 0.08) !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] .glass-hover:hover {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(124, 58, 237, 0.2) !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] .bg-white\/5 {
+      background: rgba(0, 0, 0, 0.03) !important;
+    }
+
+    [data-theme="light"] .bg-white\/10 {
+      background: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] .border-white\/10,
+    [data-theme="light"] .border-white\/5 {
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Purple colored elements - stronger in light mode */
+    [data-theme="light"] .text-purple-400,
+    [data-theme="light"] .text-purple-500 {
+      color: #7c3aed !important;
+    }
+
+    [data-theme="light"] .text-purple-300 {
+      color: #8b5cf6 !important;
+    }
+
+    [data-theme="light"] .bg-purple-500\/10 {
+      background: rgba(124, 58, 237, 0.12) !important;
+    }
+
+    [data-theme="light"] .bg-purple-500\/20 {
+      background: rgba(124, 58, 237, 0.18) !important;
+    }
+
+    [data-theme="light"] .border-purple-500\/20,
+    [data-theme="light"] .border-purple-500\/30 {
+      border-color: rgba(124, 58, 237, 0.25) !important;
+    }
+
+    /* Blue colored elements - stronger in light mode */
+    [data-theme="light"] .text-blue-400,
+    [data-theme="light"] .text-blue-500 {
+      color: #2563eb !important;
+    }
+
+    [data-theme="light"] .text-blue-300 {
+      color: #3b82f6 !important;
+    }
+
+    [data-theme="light"] .bg-blue-500\/10 {
+      background: rgba(37, 99, 235, 0.12) !important;
+    }
+
+    [data-theme="light"] .bg-blue-500\/20 {
+      background: rgba(37, 99, 235, 0.18) !important;
+    }
+
+    [data-theme="light"] .border-blue-500\/20,
+    [data-theme="light"] .border-blue-500\/30 {
+      border-color: rgba(37, 99, 235, 0.25) !important;
+    }
+
+    /* Green colored elements */
+    [data-theme="light"] .text-green-400,
+    [data-theme="light"] .text-green-500 {
+      color: #16a34a !important;
+    }
+
+    [data-theme="light"] .bg-green-500\/10,
+    [data-theme="light"] .bg-green-500\/20 {
+      background: rgba(22, 163, 74, 0.15) !important;
+    }
+
+    /* Cyan colored elements */
+    [data-theme="light"] .text-cyan-400,
+    [data-theme="light"] .text-cyan-500 {
+      color: #0891b2 !important;
+    }
+
+    [data-theme="light"] .bg-cyan-500\/20 {
+      background: rgba(8, 145, 178, 0.15) !important;
+    }
+
+    /* Orange/Amber colored elements */
+    [data-theme="light"] .text-orange-400,
+    [data-theme="light"] .text-orange-500 {
+      color: #ea580c !important;
+    }
+
+    [data-theme="light"] .bg-orange-500\/20 {
+      background: rgba(234, 88, 12, 0.15) !important;
+    }
+
+    /* Yellow colored elements */
+    [data-theme="light"] .text-yellow-400,
+    [data-theme="light"] .text-yellow-500 {
+      color: #ca8a04 !important;
+    }
+
+    [data-theme="light"] .bg-yellow-500\/20 {
+      background: rgba(202, 138, 4, 0.15) !important;
+    }
+
+    /* Pink/Rose colored elements */
+    [data-theme="light"] .text-pink-400,
+    [data-theme="light"] .text-pink-500 {
+      color: #db2777 !important;
+    }
+
+    [data-theme="light"] .bg-pink-500\/20 {
+      background: rgba(219, 39, 119, 0.15) !important;
+    }
+
+    /* Gradient backgrounds - softer pastels in light mode */
+    [data-theme="light"] .from-purple-500\/20,
+    [data-theme="light"] .bg-gradient-to-br.from-purple-500\/20 {
+      --tw-gradient-from: rgba(124, 58, 237, 0.1) !important;
+    }
+
+    [data-theme="light"] .to-blue-500\/20 {
+      --tw-gradient-to: rgba(37, 99, 235, 0.1) !important;
+    }
+
+    [data-theme="light"] .to-cyan-500\/20 {
+      --tw-gradient-to: rgba(8, 145, 178, 0.1) !important;
+    }
+
+    [data-theme="light"] .to-pink-500\/20 {
+      --tw-gradient-to: rgba(219, 39, 119, 0.1) !important;
+    }
+
+    /* Inputs in light mode */
+    [data-theme="light"] input,
+    [data-theme="light"] textarea {
+      background: #ffffff !important;
+      border-color: rgba(0, 0, 0, 0.15) !important;
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] input:focus,
+    [data-theme="light"] textarea:focus {
+      border-color: rgba(124, 58, 237, 0.5) !important;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+    }
+
+    [data-theme="light"] input::placeholder,
+    [data-theme="light"] textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    /* Mobile menu light mode */
+    [data-theme="light"] #mobile-menu {
+      background: rgba(255, 255, 255, 0.98) !important;
+      border-color: rgba(0, 0, 0, 0.08) !important;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] #mobile-menu-overlay {
+      background: rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Buttons - CTA buttons stay vibrant */
+    [data-theme="light"] .from-purple-600 {
+      --tw-gradient-from: #7c3aed !important;
+    }
+
+    [data-theme="light"] .to-blue-600 {
+      --tw-gradient-to: #2563eb !important;
+    }
+
+    /* Shadow adjustments for light mode */
+    [data-theme="light"] .shadow-lg {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    [data-theme="light"] .shadow-2xl {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    [data-theme="light"] .shadow-purple-500\/20,
+    [data-theme="light"] .shadow-purple-500\/30 {
+      --tw-shadow-color: rgba(124, 58, 237, 0.2) !important;
+    }
+
+    /* Hero card adjustments */
+    [data-theme="light"] .border-l-purple-500 {
+      border-left-color: #7c3aed !important;
+    }
+
+    [data-theme="light"] .border-l-blue-500 {
+      border-left-color: #2563eb !important;
+    }
+
+    [data-theme="light"] .border-l-green-500 {
+      border-left-color: #16a34a !important;
+    }
+
+    [data-theme="light"] .border-l-cyan-500 {
+      border-left-color: #0891b2 !important;
+    }
+
+    /* Footer in light mode */
+    [data-theme="light"] footer {
+      background: rgba(255, 255, 255, 0.6) !important;
+      border-color: rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* Section dividers in light mode */
+    [data-theme="light"] section::before {
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.2), transparent) !important;
+    }
+
+    /* Experience timeline bullets */
+    [data-theme="light"] .fa-chevron-right {
+      color: #7c3aed !important;
+    }
   </style>
 </head>
 <body class="font-sans antialiased text-gray-100">
   
+  <!-- Background Effects -->
+  <div class="bg-wrapper">
+    <div class="bg-gradient-base"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+    <div class="bg-spotlight"></div>
+  </div>
+
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5" style="background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(20px);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -178,8 +716,14 @@
           </a>
         </div>
 
-        <!-- CTA & Mobile Menu Button -->
-        <div class="flex items-center gap-3">
+        <!-- CTA, Theme Toggle & Mobile Menu Button -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-sun icon-sun text-lg"></i>
+            <i class="fas fa-moon icon-moon text-lg"></i>
+          </button>
+
           <a href="mailto:rudram.vyas@gmail.com" class="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full text-sm font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-purple-500/20">
             <i class="fas fa-envelope text-sm"></i>
             <span class="hidden md:inline">Get in Touch</span>
@@ -223,6 +767,13 @@
             Contact
           </a>
         </nav>
+        
+        <!-- Mobile Theme Toggle -->
+        <button id="mobile-theme-toggle" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all mb-4 w-full">
+          <i class="fas fa-moon mobile-icon-moon w-5"></i>
+          <i class="fas fa-sun mobile-icon-sun w-5 hidden"></i>
+          <span class="mobile-theme-text">Light Mode</span>
+        </button>
         
         <!-- Mobile CTA -->
         <a href="mailto:rudram.vyas@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all shadow-lg shadow-purple-500/20">
@@ -744,34 +1295,125 @@
       </div>
 
       <!-- Education -->
-      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="glass glass-hover rounded-2xl p-6 relative overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
-          <div class="flex items-start gap-4 pt-2">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center flex-shrink-0">
-              <i class="fas fa-graduation-cap text-purple-400 text-xl"></i>
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-white mb-1">M.S. in Computer Science</h3>
-              <div class="text-gray-400 text-sm mb-2">University of Massachusetts Lowell</div>
-              <div class="flex items-center gap-3 text-sm">
-                <span class="text-gray-500">May 2024</span>
-                <span class="px-2 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded border border-purple-500/30">GPA: 3.8/4.0</span>
+      <div class="mt-16">
+        <div class="text-center mb-10">
+          <h3 class="text-2xl font-bold text-white mb-2">
+            <i class="fas fa-graduation-cap text-purple-400 mr-3"></i>
+            Education
+          </h3>
+          <p class="text-gray-400">Academic foundations powering my engineering career</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Masters -->
+          <div class="glass glass-hover rounded-2xl p-6 relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-full blur-2xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
+            
+            <div class="relative z-10">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center flex-shrink-0 border border-purple-500/20">
+                  <i class="fas fa-graduation-cap text-purple-400 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-white mb-1">M.S. in Computer Science</h4>
+                  <div class="text-purple-400 font-semibold text-sm">University of Massachusetts Lowell</div>
+                  <div class="text-gray-500 text-sm flex items-center gap-2 mt-1">
+                    <i class="fas fa-map-marker-alt text-xs"></i>
+                    Lowell, MA
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm rounded-lg border border-purple-500/30 font-semibold">
+                  <i class="fas fa-star text-xs mr-1"></i>
+                  GPA: 3.8/4.0
+                </span>
+                <span class="px-3 py-1 bg-white/5 text-gray-300 text-sm rounded-lg border border-white/10">
+                  <i class="far fa-calendar-alt text-xs mr-1"></i>
+                  Aug 2022 – May 2024
+                </span>
+              </div>
+              
+              <div class="space-y-3">
+                <div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Key Coursework</div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Algorithms</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Machine Learning</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Database Systems</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Computer Networks</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Highlights</div>
+                  <ul class="text-gray-400 text-sm space-y-1">
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check text-purple-400 text-xs mt-1"></i>
+                      Graduate Course Assistant for Algorithms
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check text-purple-400 text-xs mt-1"></i>
+                      Student Support Analyst at IT Services
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="glass glass-hover rounded-2xl p-6 relative overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
-          <div class="flex items-start gap-4 pt-2">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center flex-shrink-0">
-              <i class="fas fa-university text-blue-400 text-xl"></i>
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-white mb-1">B.Tech in Computer Science</h3>
-              <div class="text-gray-400 text-sm mb-2">Nirma University</div>
-              <div class="text-gray-500 text-sm">May 2022</div>
+          <!-- Bachelors -->
+          <div class="glass glass-hover rounded-2xl p-6 relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 rounded-full blur-2xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
+            
+            <div class="relative z-10">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center flex-shrink-0 border border-blue-500/20">
+                  <i class="fas fa-university text-blue-400 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-white mb-1">B.Tech in Computer Science</h4>
+                  <div class="text-blue-400 font-semibold text-sm">Nirma University</div>
+                  <div class="text-gray-500 text-sm flex items-center gap-2 mt-1">
+                    <i class="fas fa-map-marker-alt text-xs"></i>
+                    Ahmedabad, India
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-white/5 text-gray-300 text-sm rounded-lg border border-white/10">
+                  <i class="far fa-calendar-alt text-xs mr-1"></i>
+                  Aug 2018 – May 2022
+                </span>
+              </div>
+              
+              <div class="space-y-3">
+                <div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Key Coursework</div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Data Structures</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Operating Systems</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Software Engineering</span>
+                    <span class="px-2 py-1 bg-white/5 text-gray-400 text-xs rounded">Web Development</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Highlights</div>
+                  <ul class="text-gray-400 text-sm space-y-1">
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check text-blue-400 text-xs mt-1"></i>
+                      Founded Chitramanch startup during studies
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check text-blue-400 text-xs mt-1"></i>
+                      Completed internship at State Street Corporation
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1004,6 +1646,75 @@
       section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
       observer.observe(section);
     });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const html = document.documentElement;
+    
+    // Mobile theme toggle elements
+    const mobileIconMoon = document.querySelector('.mobile-icon-moon');
+    const mobileIconSun = document.querySelector('.mobile-icon-sun');
+    const mobileThemeText = document.querySelector('.mobile-theme-text');
+    
+    // Check for saved theme preference or default to dark
+    function getThemePreference() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme;
+      }
+      // Check system preference
+      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+
+    // Update mobile toggle UI
+    function updateMobileToggleUI(theme) {
+      if (theme === 'light') {
+        mobileIconMoon.classList.add('hidden');
+        mobileIconSun.classList.remove('hidden');
+        mobileThemeText.textContent = 'Dark Mode';
+      } else {
+        mobileIconMoon.classList.remove('hidden');
+        mobileIconSun.classList.add('hidden');
+        mobileThemeText.textContent = 'Light Mode';
+      }
+    }
+
+    // Apply theme
+    function setTheme(theme) {
+      if (theme === 'light') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+      localStorage.setItem('theme', theme);
+      updateMobileToggleUI(theme);
+    }
+
+    // Initialize theme on page load
+    setTheme(getThemePreference());
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Mobile theme toggle
+    mobileThemeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'light' : 'dark');
+      }
+    });
   </script>
 </body>
 </html>
+  
