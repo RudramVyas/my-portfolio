@@ -747,6 +747,11 @@
             Play Game
             <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
           </a>
+          <a href="explore.html" class="nav-link px-4 py-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors relative group flex items-center gap-1.5">
+            <i class="fas fa-cube text-xs"></i>
+            Explore 3D
+            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+          </a>
         </div>
 
         <!-- CTA, Theme Toggle & Mobile Menu Button -->
@@ -802,6 +807,10 @@
           <a href="game.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-purple-400 hover:text-purple-300 border border-purple-500/20 transition-all">
             <i class="fas fa-gamepad w-5"></i>
             Play Game
+          </a>
+          <a href="explore.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-blue-600/20 to-cyan-600/20 text-blue-400 hover:text-blue-300 border border-blue-500/20 transition-all">
+            <i class="fas fa-cube w-5"></i>
+            Explore 3D
           </a>
         </nav>
         
@@ -1819,24 +1828,24 @@
     // Icosahedron (main centerpiece)
     const icosaGeo = new THREE.IcosahedronGeometry(4, 1);
     const icosa = new THREE.Mesh(icosaGeo, gradientMaterial);
-    icosa.position.set(12, 2, -5);
-    icosa.userData = { baseX: 12, baseY: 2, speed: 0.3, amplitude: 1.5 };
+    icosa.position.set(-15, -5, -10);
+    icosa.userData = { baseX: -15, baseY: -5, speed: 0.3, amplitude: 1.5 };
     scene.add(icosa);
     shapes.push(icosa);
 
     // Torus Knot
     const torusKnotGeo = new THREE.TorusKnotGeometry(2, 0.5, 100, 16);
     const torusKnot = new THREE.Mesh(torusKnotGeo, gradientMaterial);
-    torusKnot.position.set(-15, -5, -10);
-    torusKnot.userData = { baseX: -15, baseY: -5, speed: 0.2, amplitude: 2 };
+    torusKnot.position.set(12, 2, -5);
+    torusKnot.userData = { baseX: 12, baseY: 2, speed: 0.2, amplitude: 2 };
     scene.add(torusKnot);
     shapes.push(torusKnot);
 
     // Octahedron
     const octaGeo = new THREE.OctahedronGeometry(2.5, 0);
     const octa = new THREE.Mesh(octaGeo, gradientMaterial);
-    octa.position.set(-10, 8, -8);
-    octa.userData = { baseX: -10, baseY: 8, speed: 0.4, amplitude: 1 };
+    octa.position.set(-3, 8, -8);
+    octa.userData = { baseX: -3, baseY: 8, speed: 0.4, amplitude: 1 };
     scene.add(octa);
     shapes.push(octa);
 

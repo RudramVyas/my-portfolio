@@ -19,6 +19,9 @@
   
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Portfolio Data -->
+  <script src="portfolio-data.js"></script>
 
   <style>
     * {
@@ -298,6 +301,29 @@
 
     .start-screen.hidden {
       display: none;
+    }
+
+    .start-screen-back {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .start-screen-back:hover {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #fff;
     }
 
     .game-title {
@@ -607,6 +633,11 @@
 
   <!-- Start Screen -->
   <div class="start-screen" id="start-screen">
+    <a href="index.html" class="start-screen-back">
+      <i class="fas fa-arrow-left"></i>
+      Back to Portfolio
+    </a>
+    
     <h1 class="game-title">SKILL GALAXY</h1>
     <p class="game-subtitle">
       Navigate the cosmos and collect <span>Rudram's tech skills</span>! 
@@ -725,24 +756,8 @@
   </div>
 
   <script>
-    // ===== SKILL DATA (From Rudram's Profile) =====
-    const skills = [
-      { name: "C#", fact: "Primary language at AllianceHCM for enterprise HCM platform", color: 0xa855f7, icon: "fa-hashtag", points: 100 },
-      { name: "JavaScript", fact: "Used across 500+ pages at AllianceHCM with jQuery", color: 0xf7df1e, icon: "fa-js", points: 100 },
-      { name: "React", fact: "Led ShopR redesign, boosting engagement by 40%", color: 0x61dafb, icon: "fa-react", points: 120 },
-      { name: "Python", fact: "Built ML models for MRI classification at UMass Lowell", color: 0x3776ab, icon: "fa-python", points: 100 },
-      { name: "SQL Server", fact: "Optimized complex payroll queries for 2.5M+ users", color: 0xcc2927, icon: "fa-database", points: 110 },
-      { name: "ASP.NET", fact: "Core framework for AllianceHCM's HCM platform", color: 0x512bd4, icon: "fa-server", points: 120 },
-      { name: "Node.js", fact: "Backend for Chitramanch photography marketplace", color: 0x339933, icon: "fa-node-js", points: 100 },
-      { name: "MongoDB", fact: "NoSQL database for Chitramanch platform", color: 0x47a248, icon: "fa-leaf", points: 90 },
-      { name: "jQuery", fact: "Enhanced UI components across enterprise platform", color: 0x0769ad, icon: "fa-code", points: 80 },
-      { name: "Java", fact: "Used at State Street for Chaos Engineering tests", color: 0xf89820, icon: "fa-java", points: 100 },
-      { name: "PostgreSQL", fact: "Database expertise from ShopR development", color: 0x336791, icon: "fa-database", points: 90 },
-      { name: "AWS", fact: "Cloud infrastructure for scalable deployments", color: 0xff9900, icon: "fa-aws", points: 110 },
-      { name: "Docker", fact: "Containerization for consistent dev environments", color: 0x2496ed, icon: "fa-docker", points: 100 },
-      { name: "Git", fact: "Version control across all professional projects", color: 0xf05032, icon: "fa-git-alt", points: 80 },
-      { name: "TypeScript", fact: "Type-safe JavaScript for LAMPT social network", color: 0x3178c6, icon: "fa-code", points: 100 },
-    ];
+    // ===== SKILL DATA (From portfolio-data.js) =====
+    const skills = PORTFOLIO_DATA.gameSkills;
 
     // ===== THREE.JS SETUP =====
     const canvas = document.getElementById('game-canvas');
@@ -1145,6 +1160,7 @@
       renderer.render(scene, camera);
     }
 
+    // Start animation
     animate(0);
 
     // ===== RESIZE =====

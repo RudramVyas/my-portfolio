@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Portfolio Arcade | Rudram Vyas - Explore Differently</title>
+  <meta name="description" content="An immersive 3D experience - Explore Rudram's portfolio like never before!" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-new.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Portfolio Data -->
+  <script src="portfolio-data.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #030305;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+      cursor: crosshair;
+    }
+
+    /* Game Canvas */
+    #mall-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* UI Overlay */
+    .ui-overlay {
+      position: fixed;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .ui-overlay * {
+      pointer-events: auto;
+    }
+
+    /* Header */
+    .mall-header {
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(3, 3, 5, 0.9) 0%, transparent 100%);
+    }
+
+    .mall-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mall-logo-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .mall-logo-text {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .mall-logo-text span {
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mall-logo-subtitle {
+      font-size: 0.7rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #fff;
+    }
+
+    /* Crosshair */
+    .crosshair {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    .crosshair-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(168, 85, 247, 0.8);
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .crosshair-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .crosshair.active .crosshair-ring {
+      width: 40px;
+      height: 40px;
+      border-color: rgba(168, 85, 247, 0.8);
+    }
+
+    /* Zone Indicator */
+    .zone-indicator {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .zone-indicator.show {
+      opacity: 1;
+    }
+
+    .zone-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .zone-subtitle {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 5px;
+    }
+
+    /* Mini Map */
+    .mini-map {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 180px;
+      height: 180px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 15px;
+      z-index: 100;
+    }
+
+    .mini-map-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .mini-map-content {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 25px);
+    }
+
+    .map-zone {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .map-zone:hover {
+      transform: scale(1.2);
+    }
+
+    .map-zone.experience { background: rgba(168, 85, 247, 0.3); top: 10%; left: 20%; }
+    .map-zone.projects { background: rgba(59, 130, 246, 0.3); top: 10%; right: 20%; }
+    .map-zone.skills { background: rgba(34, 197, 94, 0.3); bottom: 30%; left: 20%; }
+    .map-zone.education { background: rgba(251, 191, 36, 0.3); bottom: 30%; right: 20%; }
+    .map-zone.contact { background: rgba(236, 72, 153, 0.3); bottom: 5%; left: 50%; transform: translateX(-50%); }
+
+    .map-player {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    /* Controls */
+    .controls-hint {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 15px 20px;
+      z-index: 100;
+    }
+
+    .controls-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .control-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+
+    /* Info Panel */
+    .info-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      z-index: 200;
+      background: rgba(5, 5, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 24px;
+      padding: 0;
+      max-width: 500px;
+      width: 90%;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .info-panel.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .info-panel-header {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .info-panel-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .info-panel-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .info-panel-subtitle {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    .info-panel-body {
+      padding: 25px 30px;
+    }
+
+    .info-panel-content {
+      color: #d1d5db;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .info-panel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .info-tag {
+      padding: 6px 12px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #c084fc;
+    }
+
+    .info-tag.blue {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+    }
+
+    .info-panel-footer {
+      padding: 20px 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-panel-btn {
+      padding: 10px 25px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-panel-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .panel-link {
+      padding: 10px 25px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .panel-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+    }
+
+    /* Welcome Screen */
+    .welcome-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(3, 3, 5, 0.98);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .welcome-screen.hidden {
+      display: none;
+    }
+
+    .welcome-screen-back {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .welcome-screen-back:hover {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #fff;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #a855f7;
+      margin-bottom: 25px;
+    }
+
+    .welcome-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      max-width: 550px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .welcome-subtitle span {
+      color: #c084fc;
+      font-weight: 600;
+    }
+
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 50px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4);
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 50px rgba(168, 85, 247, 0.6);
+    }
+
+    .zone-preview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      margin-top: 50px;
+      max-width: 600px;
+    }
+
+    .zone-preview-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .zone-preview-item:hover {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: rgba(168, 85, 247, 0.2);
+    }
+
+    .zone-preview-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .zone-preview-icon.exp { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+    .zone-preview-icon.proj { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .zone-preview-icon.skill { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .zone-preview-icon.edu { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+    .zone-preview-icon.contact { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
+
+    .zone-preview-name {
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    /* Interaction Prompts */
+    .interact-prompt {
+      position: fixed;
+      bottom: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      padding: 12px 24px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 30px;
+      font-size: 0.85rem;
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .interact-prompt.show {
+      opacity: 1;
+    }
+
+    .interact-prompt .key {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    /* Mobile Warning */
+    @media (max-width: 768px) {
+      .controls-hint {
+        display: none;
+      }
+
+      .mini-map {
+        width: 120px;
+        height: 120px;
+        padding: 10px;
+      }
+
+      .zone-preview {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 300px;
+      }
+
+      .welcome-subtitle {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: #030305;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-screen.hidden {
+      display: none;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(168, 85, 247, 0.1);
+      border-top-color: #a855f7;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loader"></div>
+    <div class="loading-text">Building the Arcade...</div>
+  </div>
+
+  <!-- Canvas -->
+  <canvas id="mall-canvas"></canvas>
+
+  <!-- Welcome Screen -->
+  <div class="welcome-screen" id="welcome-screen" style="display: none;">
+    <a href="index.html" class="welcome-screen-back">
+      <i class="fas fa-arrow-left"></i>
+      Back to Portfolio
+    </a>
+    
+    <div class="welcome-badge">
+      <i class="fas fa-sparkles"></i>
+      Interactive 3D Experience
+    </div>
+    <h1 class="welcome-title">THE PORTFOLIO ARCADE</h1>
+    <p class="welcome-subtitle">
+      Welcome to <span>Rudram's digital showcase</span>. Walk through an immersive 3D space 
+      where each zone reveals a different aspect of my journey, skills, and work.
+    </p>
+    
+    <button class="enter-btn" id="enter-btn">
+      <i class="fas fa-door-open"></i>
+      Enter the Arcade
+    </button>
+
+    <div class="zone-preview">
+      <div class="zone-preview-item">
+        <div class="zone-preview-icon exp"><i class="fas fa-briefcase"></i></div>
+        <span class="zone-preview-name">Experience</span>
+      </div>
+      <div class="zone-preview-item">
+        <div class="zone-preview-icon proj"><i class="fas fa-code"></i></div>
+        <span class="zone-preview-name">Projects</span>
+      </div>
+      <div class="zone-preview-item">
+        <div class="zone-preview-icon skill"><i class="fas fa-tools"></i></div>
+        <span class="zone-preview-name">Skills</span>
+      </div>
+      <div class="zone-preview-item">
+        <div class="zone-preview-icon edu"><i class="fas fa-graduation-cap"></i></div>
+        <span class="zone-preview-name">Education</span>
+      </div>
+      <div class="zone-preview-item">
+        <div class="zone-preview-icon contact"><i class="fas fa-envelope"></i></div>
+        <span class="zone-preview-name">Contact</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game UI -->
+  <div class="ui-overlay mall-header" id="mall-header" style="display: none;">
+    <div class="mall-logo">
+      <div class="mall-logo-icon">RV</div>
+      <div>
+        <div class="mall-logo-text">THE <span>ARCADE</span></div>
+        <div class="mall-logo-subtitle">Rudram's Portfolio</div>
+      </div>
+    </div>
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back to Portfolio
+    </a>
+  </div>
+
+  <!-- Crosshair -->
+  <div class="crosshair" id="crosshair" style="display: none;">
+    <div class="crosshair-dot"></div>
+    <div class="crosshair-ring"></div>
+  </div>
+
+  <!-- Zone Indicator -->
+  <div class="zone-indicator" id="zone-indicator">
+    <div class="zone-name" id="zone-name">Experience Zone</div>
+    <div class="zone-subtitle" id="zone-subtitle">Where I've worked</div>
+  </div>
+
+  <!-- Mini Map -->
+  <div class="mini-map" id="mini-map" style="display: none;">
+    <div class="mini-map-title">Mall Map</div>
+    <div class="mini-map-content">
+      <div class="map-zone experience" title="Experience"><i class="fas fa-briefcase"></i></div>
+      <div class="map-zone projects" title="Projects"><i class="fas fa-code"></i></div>
+      <div class="map-zone skills" title="Skills"><i class="fas fa-tools"></i></div>
+      <div class="map-zone education" title="Education"><i class="fas fa-graduation-cap"></i></div>
+      <div class="map-zone contact" title="Contact"><i class="fas fa-envelope"></i></div>
+      <div class="map-player" id="map-player"></div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-hint" id="controls-hint" style="display: none;">
+    <div class="controls-title">Navigation</div>
+    <div class="control-row">
+      <span class="key">W</span>
+      <span class="key">A</span>
+      <span class="key">S</span>
+      <span class="key">D</span>
+      <span>Move</span>
+    </div>
+    <div class="control-row">
+      <span class="key">MOUSE</span>
+      <span>Look around</span>
+    </div>
+    <div class="control-row">
+      <span class="key">CLICK</span>
+      <span>Interact</span>
+    </div>
+    <div class="control-row">
+      <span class="key">ESC</span>
+      <span>Exit view</span>
+    </div>
+  </div>
+
+  <!-- Interaction Prompt -->
+  <div class="interact-prompt" id="interact-prompt">
+    <span class="key">CLICK</span>
+    <span>to learn more</span>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="info-panel" id="info-panel">
+    <div class="info-panel-header">
+      <div class="info-panel-icon" id="panel-icon"><i class="fas fa-briefcase"></i></div>
+      <div class="info-panel-title" id="panel-title">AllianceHCM</div>
+      <div class="info-panel-subtitle" id="panel-subtitle">Software Engineer • Houston, TX</div>
+    </div>
+    <div class="info-panel-body">
+      <div class="info-panel-content" id="panel-content">
+        Developed and enhanced full-stack features across a 500+ page ASP.NET Web Forms platform serving 2.5M+ active users.
+      </div>
+      <div class="info-panel-tags" id="panel-tags">
+        <span class="info-tag">ASP.NET</span>
+        <span class="info-tag">C#</span>
+        <span class="info-tag blue">JavaScript</span>
+      </div>
+    </div>
+    <div class="info-panel-footer">
+      <button class="close-panel-btn" id="close-panel">
+        <i class="fas fa-times"></i> Close
+      </button>
+      <a href="index.html#experience" class="panel-link" id="panel-link">
+        View Full Section <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ===== DATA FROM PORTFOLIO (From portfolio-data.js) =====
+    const profileData = PORTFOLIO_DATA.arcadeData;
+    const tempProfileData = {
+      experience: [
+        {
+          id: 'alliancehcm',
+          title: 'AllianceHCM',
+          subtitle: 'Software Engineer • Houston, TX • Sept 2025 – Present',
+          content: 'Developed and enhanced full-stack features across a 500+ page ASP.NET Web Forms (C#, JS/jQuery) HCM platform serving 2.5M+ active users and 10K+ client companies. Built new modules and optimized existing functionalities using ASP.NET C#, jQuery, and MS SQL Server.',
+          tags: ['ASP.NET', 'C#', 'JavaScript', 'jQuery', 'SQL Server'],
+          icon: 'fa-building',
+          link: 'index.html#experience'
+        },
+        {
+          id: 'shopr',
+          title: 'ShopR',
+          subtitle: 'Software Engineer • Richmond, VA • Jun 2024 – Aug 2025',
+          content: 'Led full redesign using React & MUI, boosting user engagement by 40% and mobile traffic by 30%. Architected REST APIs, cutting feature deployment time by 50%. Mentored junior developers and formalized code-review practices.',
+          tags: ['React', 'Material-UI', 'PostgreSQL', 'REST APIs'],
+          icon: 'fa-shopping-cart',
+          link: 'index.html#experience'
+        },
+        {
+          id: 'statestreet',
+          title: 'State Street Corporation',
+          subtitle: 'Software Engineering Intern • Boston, MA • Jan – Jun 2022',
+          content: 'Built Chaos Engineering tests reducing failure-related downtime by 15%. Optimized SQL queries improving response times by 30%.',
+          tags: ['Java', 'SQL', 'Chaos Engineering'],
+          icon: 'fa-chart-line',
+          link: 'index.html#experience'
+        },
+        {
+          id: 'chitramanch',
+          title: 'Chitramanch',
+          subtitle: 'Founder & CTO • Vadodara, India • Jan 2021 – Jul 2022',
+          content: 'Built photography marketplace from scratch with advanced search and portfolio views. Drove 50% increase in client inquiries and 15% higher user satisfaction within 6 months.',
+          tags: ['React', 'Node.js', 'MongoDB', 'Startup'],
+          icon: 'fa-camera',
+          link: 'index.html#experience'
+        }
+      ],
+      projects: [
+        {
+          id: 'mri',
+          title: 'MRI Classification',
+          subtitle: 'Machine Learning • Healthcare',
+          content: 'Deep learning pipelines combining multiple MRI modalities using ensemble methods to improve tumor classification accuracy. Built with PyTorch and computer vision techniques.',
+          tags: ['PyTorch', 'Computer Vision', 'Deep Learning'],
+          icon: 'fa-brain',
+          link: 'https://github.com/RudramVyas/Ensemble_Learning_for_Multi-Modal_MRI_Image_Classification'
+        },
+        {
+          id: 'snapsolutions',
+          title: 'Snap-Solutions',
+          subtitle: 'Full-Stack • Marketplace',
+          content: 'Photography marketplace with real-time interactions and polished portfolio browsing, connecting clients with photographers seamlessly.',
+          tags: ['React', 'Node.js', 'MongoDB'],
+          icon: 'fa-images',
+          link: 'https://github.com/RudramVyas/Snap-Solutions-aka-Chitramanch'
+        },
+        {
+          id: 'pothole',
+          title: 'Pothole Detection',
+          subtitle: 'Computer Vision • Safety',
+          content: 'Real-time computer-vision system detecting road potholes from video feeds to improve road maintenance and safety.',
+          tags: ['Python', 'OpenCV', 'Image Processing'],
+          icon: 'fa-road',
+          link: 'https://github.com/RudramVyas/Pothole-Detection'
+        },
+        {
+          id: 'lampt',
+          title: 'LAMPT Social Network',
+          subtitle: 'Full-Stack • Social',
+          content: 'Social platform built on LAMP stack plus TypeScript, featuring profiles, posts, and timelines.',
+          tags: ['Linux', 'MySQL', 'PHP', 'TypeScript'],
+          icon: 'fa-users',
+          link: 'https://github.com/RudramVyas/LAMPT-Social-Networking-Site'
+        }
+      ],
+      skills: [
+        { id: 'csharp', title: 'C#', subtitle: 'Primary Language', content: 'Core language for enterprise ASP.NET development at AllianceHCM. Used for backend logic, data processing, and integration.', tags: ['Backend', 'Enterprise'], icon: 'fa-hashtag' },
+        { id: 'javascript', title: 'JavaScript', subtitle: 'Frontend & Backend', content: 'Extensive use across 500+ pages, from DOM manipulation to complex UI interactions and Node.js backends.', tags: ['Frontend', 'Backend', 'Full-Stack'], icon: 'fa-js' },
+        { id: 'react', title: 'React', subtitle: 'UI Framework', content: 'Led complete redesign at ShopR, implementing modern component architecture and state management.', tags: ['Frontend', 'UI/UX'], icon: 'fa-react' },
+        { id: 'python', title: 'Python', subtitle: 'ML & Scripting', content: 'Used for machine learning projects including MRI classification and computer vision applications.', tags: ['ML', 'Data Science'], icon: 'fa-python' },
+        { id: 'sql', title: 'SQL Server', subtitle: 'Database', content: 'Optimized complex payroll queries and stored procedures handling millions of records.', tags: ['Database', 'Enterprise'], icon: 'fa-database' },
+        { id: 'aws', title: 'AWS', subtitle: 'Cloud Platform', content: 'Cloud infrastructure knowledge for scalable application deployments and services.', tags: ['Cloud', 'DevOps'], icon: 'fa-aws' }
+      ],
+      education: [
+        {
+          id: 'masters',
+          title: 'M.S. Computer Science',
+          subtitle: 'UMass Lowell • GPA: 3.8/4.0 • Aug 2022 – May 2024',
+          content: 'Focused on Algorithms, Machine Learning, Database Systems, and Computer Networks. Served as Graduate Course Assistant for Algorithms and Student Support Analyst at IT Services.',
+          tags: ['Algorithms', 'Machine Learning', 'Databases'],
+          icon: 'fa-graduation-cap',
+          link: 'index.html#skills'
+        },
+        {
+          id: 'bachelors',
+          title: 'B.Tech Computer Science',
+          subtitle: 'Nirma University • India • Aug 2018 – May 2022',
+          content: 'Strong foundation in Data Structures, Operating Systems, Software Engineering, and Web Development. Founded Chitramanch startup and completed internship at State Street during studies.',
+          tags: ['Data Structures', 'OS', 'Software Engineering'],
+          icon: 'fa-university',
+          link: 'index.html#skills'
+        }
+      ],
+      contact: [
+        { id: 'email', title: 'Email', subtitle: 'Direct Contact', content: 'Reach out directly for opportunities, collaborations, or just to chat about tech!', tags: ['rudram.vyas@gmail.com'], icon: 'fa-envelope', link: 'mailto:rudram.vyas@gmail.com' },
+        { id: 'linkedin', title: 'LinkedIn', subtitle: 'Professional Network', content: 'Connect with me on LinkedIn for professional updates and networking.', tags: ['linkedin.com/in/rudram-vyas'], icon: 'fa-linkedin', link: 'https://linkedin.com/in/rudram-vyas' },
+        { id: 'github', title: 'GitHub', subtitle: 'Code Repository', content: 'Check out my open-source contributions and personal projects on GitHub.', tags: ['github.com/rudramvyas'], icon: 'fa-github', link: 'https://github.com/rudramvyas' }
+      ]
+    };
+
+    // ===== THREE.JS SETUP =====
+    const canvas = document.getElementById('mall-canvas');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x030305, 0, 100);
+    
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x030305);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // ===== LIGHTING =====
+    const ambientLight = new THREE.AmbientLight(0x404050, 0.4);
+    scene.add(ambientLight);
+
+    // Spotlights for zones
+    const createSpotlight = (color, x, z) => {
+      const light = new THREE.SpotLight(color, 2, 50, Math.PI / 4, 0.5);
+      light.position.set(x, 15, z);
+      light.target.position.set(x, 0, z);
+      light.castShadow = true;
+      scene.add(light);
+      scene.add(light.target);
+      return light;
+    };
+
+    const expLight = createSpotlight(0xa855f7, -20, -20);
+    const projLight = createSpotlight(0x3b82f6, 20, -20);
+    const skillLight = createSpotlight(0x22c55e, -20, 20);
+    const eduLight = createSpotlight(0xfbbf24, 20, 20);
+    const contactLight = createSpotlight(0xec4899, 0, 35);
+
+    // ===== FLOOR =====
+    const floorGeo = new THREE.PlaneGeometry(100, 100);
+    const floorMat = new THREE.MeshStandardMaterial({ 
+      color: 0x0a0a10,
+      roughness: 0.8,
+      metalness: 0.2
+    });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Grid lines on floor
+    const gridHelper = new THREE.GridHelper(100, 50, 0x1a1a2e, 0x0f0f1a);
+    scene.add(gridHelper);
+
+    // ===== ZONE BOOTHS =====
+    const booths = [];
+    const interactables = [];
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function createBooth(name, position, color, data, sectionLink) {
+      const group = new THREE.Group();
+      group.position.copy(position);
+
+      // Platform
+      const platformGeo = new THREE.CylinderGeometry(8, 8, 0.5, 32);
+      const platformMat = new THREE.MeshStandardMaterial({ 
+        color: color,
+        roughness: 0.3,
+        metalness: 0.7,
+        transparent: true,
+        opacity: 0.3
+      });
+      const platform = new THREE.Mesh(platformGeo, platformMat);
+      platform.position.y = 0.25;
+      platform.receiveShadow = true;
+      group.add(platform);
+
+      // Glowing ring
+      const ringGeo = new THREE.TorusGeometry(8, 0.2, 16, 100);
+      const ringMat = new THREE.MeshBasicMaterial({ 
+        color: color,
+        transparent: true,
+        opacity: 0.8
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.y = 0.5;
+      group.add(ring);
+
+      // Center pillar with holographic display
+      const pillarGeo = new THREE.CylinderGeometry(1, 1.2, 6, 8);
+      const pillarMat = new THREE.MeshPhysicalMaterial({
+        color: 0x1a1a2e,
+        roughness: 0.1,
+        metalness: 0.9,
+        transparent: true,
+        opacity: 0.7
+      });
+      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+      pillar.position.y = 3;
+      pillar.castShadow = true;
+      group.add(pillar);
+
+      // Holographic top
+      const holoGeo = new THREE.OctahedronGeometry(1.5, 0);
+      const holoMat = new THREE.MeshPhysicalMaterial({
+        color: color,
+        roughness: 0,
+        metalness: 0.3,
+        transparent: true,
+        opacity: 0.6,
+        emissive: color,
+        emissiveIntensity: 0.3
+      });
+      const holo = new THREE.Mesh(holoGeo, holoMat);
+      holo.position.y = 7;
+      group.add(holo);
+
+      // Display items around the booth
+      const itemCount = Math.min(data.length, 6);
+      data.slice(0, itemCount).forEach((item, i) => {
+        const angle = (i / itemCount) * Math.PI * 2;
+        const radius = 5;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+
+        // Item pedestal
+        const pedestalGeo = new THREE.BoxGeometry(2, 3, 2);
+        const pedestalMat = new THREE.MeshStandardMaterial({
+          color: 0x15151f,
+          roughness: 0.5,
+          metalness: 0.5
+        });
+        const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
+        pedestal.position.set(x, 1.5, z);
+        pedestal.castShadow = true;
+        pedestal.receiveShadow = true;
+        group.add(pedestal);
+
+        // Floating item
+        const itemGeo = new THREE.IcosahedronGeometry(0.6, 0);
+        const itemMat = new THREE.MeshPhysicalMaterial({
+          color: color,
+          roughness: 0.1,
+          metalness: 0.5,
+          emissive: color,
+          emissiveIntensity: 0.2
+        });
+        const itemMesh = new THREE.Mesh(itemGeo, itemMat);
+        itemMesh.position.set(x, 4, z);
+        itemMesh.userData = { 
+          type: 'item', 
+          data: item, 
+          zone: name,
+          sectionLink: sectionLink,
+          baseY: 4,
+          phase: Math.random() * Math.PI * 2
+        };
+        group.add(itemMesh);
+        interactables.push(itemMesh);
+      });
+
+      // Zone data
+      group.userData = { 
+        name, 
+        holo,
+        ring,
+        data,
+        sectionLink
+      };
+      
+      scene.add(group);
+      booths.push(group);
+      return group;
+    }
+
+    // Create all zones
+    createBooth('Experience', new THREE.Vector3(-20, 0, -20), 0xa855f7, profileData.experience, 'index.html#experience');
+    createBooth('Projects', new THREE.Vector3(20, 0, -20), 0x3b82f6, profileData.projects, 'index.html#projects');
+    createBooth('Skills', new THREE.Vector3(-20, 0, 20), 0x22c55e, profileData.skills, 'index.html#skills');
+    createBooth('Education', new THREE.Vector3(20, 0, 20), 0xfbbf24, profileData.education, 'index.html#skills');
+    createBooth('Contact', new THREE.Vector3(0, 0, 35), 0xec4899, profileData.contact, 'index.html#contact');
+
+    // ===== AMBIENT PARTICLES =====
+    const particleGeo = new THREE.BufferGeometry();
+    const particleCount = 500;
+    const positions = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 100;
+      positions[i + 1] = Math.random() * 30;
+      positions[i + 2] = (Math.random() - 0.5) * 100;
+    }
+    
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({ 
+      color: 0xa855f7, 
+      size: 0.1, 
+      transparent: true, 
+      opacity: 0.6 
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    // ===== PLAYER / CAMERA CONTROLS =====
+    camera.position.set(0, 2, 10);
+    let yaw = 0, pitch = 0;
+    let isLocked = false;
+
+    const keys = { w: false, a: false, s: false, d: false };
+    const velocity = new THREE.Vector3();
+    const moveSpeed = 0.15;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'w') keys.w = true;
+      if (e.key.toLowerCase() === 'a') keys.a = true;
+      if (e.key.toLowerCase() === 's') keys.s = true;
+      if (e.key.toLowerCase() === 'd') keys.d = true;
+      if (e.key === 'Escape') {
+        closeInfoPanel();
+        if (document.pointerLockElement) {
+          document.exitPointerLock();
+        }
+      }
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (e.key.toLowerCase() === 'w') keys.w = false;
+      if (e.key.toLowerCase() === 'a') keys.a = false;
+      if (e.key.toLowerCase() === 's') keys.s = false;
+      if (e.key.toLowerCase() === 'd') keys.d = false;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isLocked || !gameStarted) return;
+      
+      yaw -= e.movementX * 0.002;
+      pitch -= e.movementY * 0.002;
+      pitch = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, pitch));
+      
+      camera.rotation.order = 'YXZ';
+      camera.rotation.y = yaw;
+      camera.rotation.x = pitch;
+    });
+
+    document.addEventListener('pointerlockchange', () => {
+      isLocked = !!document.pointerLockElement;
+    });
+
+    canvas.addEventListener('click', () => {
+      if (gameStarted && !document.pointerLockElement && !infoPanelOpen) {
+        canvas.requestPointerLock();
+      } else if (isLocked) {
+        checkInteraction();
+      }
+    });
+
+    // ===== INTERACTION =====
+    let hoveredItem = null;
+    let infoPanelOpen = false;
+
+    function checkInteraction() {
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const intersects = raycaster.intersectObjects(interactables);
+      
+      if (intersects.length > 0 && intersects[0].distance < 10) {
+        const item = intersects[0].object;
+        showInfoPanel(item.userData.data, item.userData.zone, item.userData.sectionLink);
+      }
+    }
+
+    function updateHover() {
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const intersects = raycaster.intersectObjects(interactables);
+      
+      const crosshair = document.getElementById('crosshair');
+      const prompt = document.getElementById('interact-prompt');
+      
+      if (intersects.length > 0 && intersects[0].distance < 10) {
+        hoveredItem = intersects[0].object;
+        crosshair.classList.add('active');
+        prompt.classList.add('show');
+      } else {
+        hoveredItem = null;
+        crosshair.classList.remove('active');
+        prompt.classList.remove('show');
+      }
+    }
+
+    // ===== INFO PANEL =====
+    const infoPanel = document.getElementById('info-panel');
+    const panelIcon = document.getElementById('panel-icon');
+    const panelTitle = document.getElementById('panel-title');
+    const panelSubtitle = document.getElementById('panel-subtitle');
+    const panelContent = document.getElementById('panel-content');
+    const panelTags = document.getElementById('panel-tags');
+    const panelLink = document.getElementById('panel-link');
+
+    function showInfoPanel(data, zone, sectionLink) {
+      document.exitPointerLock();
+      
+      panelIcon.innerHTML = `<i class="fas ${data.icon}"></i>`;
+      panelTitle.textContent = data.title;
+      panelSubtitle.textContent = data.subtitle;
+      panelContent.textContent = data.content;
+      panelTags.innerHTML = data.tags.map((tag, i) => 
+        `<span class="info-tag ${i % 2 === 0 ? '' : 'blue'}">${tag}</span>`
+      ).join('');
+      panelLink.href = data.link || sectionLink;
+      
+      infoPanel.classList.add('show');
+      infoPanelOpen = true;
+    }
+
+    function closeInfoPanel() {
+      infoPanel.classList.remove('show');
+      infoPanelOpen = false;
+    }
+
+    document.getElementById('close-panel').addEventListener('click', closeInfoPanel);
+
+    // ===== ZONE DETECTION =====
+    const zoneIndicator = document.getElementById('zone-indicator');
+    const zoneName = document.getElementById('zone-name');
+    const zoneSubtitle = document.getElementById('zone-subtitle');
+    let currentZone = null;
+
+    const zoneSubtitles = {
+      'Experience': 'Where I\'ve worked',
+      'Projects': 'What I\'ve built',
+      'Skills': 'Tools I use',
+      'Education': 'My academic journey',
+      'Contact': 'Get in touch'
+    };
+
+    function updateZone() {
+      let nearestZone = null;
+      let nearestDist = Infinity;
+      
+      booths.forEach(booth => {
+        const dist = camera.position.distanceTo(booth.position);
+        if (dist < 15 && dist < nearestDist) {
+          nearestDist = dist;
+          nearestZone = booth.userData.name;
+        }
+      });
+      
+      if (nearestZone !== currentZone) {
+        currentZone = nearestZone;
+        if (currentZone) {
+          zoneName.textContent = currentZone + ' Zone';
+          zoneSubtitle.textContent = zoneSubtitles[currentZone];
+          zoneIndicator.classList.add('show');
+        } else {
+          zoneIndicator.classList.remove('show');
+        }
+      }
+    }
+
+    // ===== MINI MAP =====
+    const mapPlayer = document.getElementById('map-player');
+    
+    function updateMiniMap() {
+      const mapX = ((camera.position.x + 30) / 60) * 150;
+      const mapY = ((camera.position.z + 30) / 70) * 130;
+      mapPlayer.style.left = Math.max(5, Math.min(145, mapX)) + 'px';
+      mapPlayer.style.top = Math.max(5, Math.min(125, mapY)) + 'px';
+    }
+
+    // ===== GAME STATE =====
+    let gameStarted = false;
+
+    // Loading simulation
+    setTimeout(() => {
+      document.getElementById('loading-screen').classList.add('hidden');
+      document.getElementById('welcome-screen').style.display = 'flex';
+    }, 1500);
+
+    document.getElementById('enter-btn').addEventListener('click', () => {
+      gameStarted = true;
+      document.getElementById('welcome-screen').style.display = 'none';
+      document.getElementById('mall-header').style.display = 'flex';
+      document.getElementById('crosshair').style.display = 'block';
+      document.getElementById('mini-map').style.display = 'block';
+      document.getElementById('controls-hint').style.display = 'block';
+      
+      // Small delay before requesting pointer lock to ensure UI is ready
+      setTimeout(() => {
+        canvas.requestPointerLock();
+      }, 100);
+    });
+
+    // ===== ANIMATION LOOP =====
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (gameStarted) {
+        if (isLocked && !infoPanelOpen) {
+          // Movement
+          const forward = new THREE.Vector3();
+          const right = new THREE.Vector3();
+          
+          camera.getWorldDirection(forward);
+          forward.y = 0;
+          forward.normalize();
+          
+          right.crossVectors(forward, new THREE.Vector3(0, 1, 0));
+          
+          velocity.set(0, 0, 0);
+          if (keys.w) velocity.add(forward.multiplyScalar(moveSpeed));
+          if (keys.s) velocity.sub(forward.multiplyScalar(moveSpeed));
+          if (keys.d) velocity.add(right.multiplyScalar(moveSpeed));
+          if (keys.a) velocity.sub(right.multiplyScalar(moveSpeed));
+          
+          camera.position.add(velocity);
+          
+          // Boundaries
+          camera.position.x = Math.max(-45, Math.min(45, camera.position.x));
+          camera.position.z = Math.max(-45, Math.min(50, camera.position.z));
+          camera.position.y = 2;
+          
+          updateHover();
+        }
+        
+        updateZone();
+        updateMiniMap();
+      }
+
+      // Animate booth elements
+      const time = Date.now() * 0.001;
+      booths.forEach((booth, i) => {
+        if (booth.userData.holo) {
+          booth.userData.holo.rotation.y += 0.01;
+          booth.userData.holo.position.y = 7 + Math.sin(time + i) * 0.3;
+        }
+        if (booth.userData.ring) {
+          booth.userData.ring.rotation.z += 0.005;
+        }
+      });
+
+      // Animate interactable items
+      interactables.forEach(item => {
+        item.rotation.y += 0.02;
+        item.position.y = item.userData.baseY + Math.sin(time * 2 + item.userData.phase) * 0.2;
+      });
+
+      // Animate particles
+      particles.rotation.y += 0.0002;
+
+      renderer.render(scene, camera);
+    }
+
+    // Start animation
+    animate();
+
+    // ===== RESIZE =====
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
+

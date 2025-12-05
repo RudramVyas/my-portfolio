@@ -1,67 +1,93 @@
-# Rudram Vyas - Portfolio [Live](https://rudramvyas.github.io/my-portfolio/)
+# My Portfolio
 
-Welcome to my personal portfolio repository. Below is an overview of my professional experience, skills, education, and project highlights, tailored to provide an insight into my journey and expertise.
+A modern, interactive portfolio website featuring 3D experiences built with Three.js.
 
-## 👨‍💻 Professional Experience
+## 📁 Structure
 
-### Software Engineer @ [ShopR](https://shoprvr.com)  
-*Richmond, VA | Jun 2024 - Present*
-- Led the redesign of the corporate site using React and Material-UI, increasing user engagement by 40%.
-- Integrated REST APIs, accelerating feature rollout by 50%.
-- Optimized server performance, reducing operational costs by 20%.
-- Mentored junior developers and improved overall code quality by 35%.
+- **Root Directory** - Production files
+  - `index.html` - Main portfolio page
+  - `game.html` - SKILL GALAXY 3D game
+  - `explore.html` - THE PORTFOLIO ARCADE 3D experience
+  - `portfolio-data.js` - Centralized data source
 
-### Founder & CTO @ [Chitramanch](https://github.com/RudramVyas/Snap-Solutions-aka-Chitramanch)  
-*Vadodara, India | Jan 2021 - Jul 2022*
-- Developed a photography marketplace using React, Node.js, and MongoDB.
-- Enhanced user satisfaction by 15% through strategic UX/UI improvements.
-- Achieved a 50% increase in client inquiries post-launch. 
+- **profiles/** - Testing files (mirrors root structure)
 
-### Graduate Course Assistant for Algorithms @ University of Massachusetts Lowell  
-*Lowell, MA | Sep 2023 - Dec 2023*
-- Mentored students, resulting in a 15% improvement in course grades.
-- Designed rubrics for graduate-level coursework, enhancing feedback quality.
+- **OLD/** - Legacy versions (archived)
 
-### Student Support Analyst @ University of Massachusetts Lowell  
-*Lowell, MA | May 2023 - May 2024*
-- Resolved technical issues, maintaining a 95% customer satisfaction rate.
-- Reduced system downtime by 20% through efficient troubleshooting.
+## 🎯 Features
 
-## 📚 Education
+### Main Portfolio (`index.html`)
+- Responsive design with light/dark mode
+- Interactive 3D elements using Three.js
+- Smooth scroll animations
+- Modern UI with gradient accents
 
-### Master of Science in Computer Science  
-*University of Massachusetts Lowell | Lowell, MA (May 2024)*
-- **GPA**: 3.8/4.0
+### SKILL GALAXY (`game.html`)
+- First-person 3D game
+- Collect skill orbs to learn about my tech stack
+- WASD + Space controls
+- Score tracking and win condition
 
-### Bachelor of Science in Computer Science and Engineering  
-*Nirma University | Ahmedabad, India (May 2022)*
+### THE PORTFOLIO ARCADE (`explore.html`)
+- Immersive 3D mall experience
+- Interactive zones for Experience, Projects, Skills, Education, Contact
+- First-person navigation with pointer lock
+- Click to view detailed information panels
 
-## 🛠️ Skills
+## 🔧 Editing Content
 
-**Languages:** Python, Java (8/11/17), C++, SQL  
-**Frameworks:** Spring (MVC, Boot, Security), React, Node.js  
-**DevOps:** Git, Docker, Kubernetes, Jenkins  
-**Databases:** MySQL, PostgreSQL, MongoDB  
-**Cloud:** AWS, Azure  
-**Tools:** Cisco Packet Tracer, Figma, Jira
+**All portfolio content is managed in one place:**
+- Edit `portfolio-data.js` in the root directory
+- Changes automatically reflect across all pages (index, game, explore)
+- The file in `profiles/` is a duplicate for testing
 
-## 🌟 Project Highlights
+## 🚀 Usage
 
-### [Ensemble Learning for Multi-Modal MRI Classification](https://github.com/RudramVyas/Ensemble_Learning_for_Multi-Modal_MRI_Image_Classification)
-- Developed a deep-learning model integrating multiple MRI modalities to enhance classification accuracy.
+Simply open any HTML file in your browser:
+- **No server required!**
+- Works with `file://` protocol
+- All dependencies loaded via CDN
 
-### [Snap-Solutions (Chitramanch)](https://github.com/RudramVyas/Snap-Solutions-aka-Chitramanch)
-- Built a collaborative photo-sharing platform with real-time interactions and user-friendly UI.
+### Recommended
+- Open `index.html` directly in browser
+- Or deploy to GitHub Pages / Netlify / Vercel
 
-### [Workspace Network System](https://github.com/RudramVyas/Workspace-Network-System)
-- Simulated a large-scale enterprise networking system using Cisco Packet Tracer.
-- Implemented modern protocols for secure communication.
+## 🎨 Customization
 
-### [Pothole Detection](https://github.com/RudramVyas/Pothole-Detection)
-- Created a real-time computer vision-based system to identify potholes using Python and OpenCV.
+### Updating Portfolio Content
+1. Open `portfolio-data.js`
+2. Edit the `PORTFOLIO_DATA` object
+3. Save and refresh your browser
 
-## 📫 Contact Me
-- **Email:** [rudramvyas06@gmail.com](mailto:rudramvyas06@gmail.com)
-- **Phone:** +1 (978) 375-8413
-- **LinkedIn:** [Rudram Vyas](https://linkedin.com/in/rudram-vyas)
-- **GitHub:** [rudramvyas](https://github.com/rudramvyas)
+### Color Scheme
+- Light/Dark mode toggle in navigation
+- Preference saved in localStorage
+- Respects system preferences
+
+### Tech Stack
+- **Three.js** - 3D graphics
+- **Tailwind CSS** - Styling
+- **Font Awesome** - Icons
+- **Vanilla JavaScript** - Interactions
+
+## 📱 Responsive
+
+Fully responsive design works on:
+- Desktop (optimized)
+- Tablets
+- Mobile devices
+
+## 🎓 Educational Projects
+
+This portfolio showcases:
+- Full-stack development experience
+- 3D web graphics with Three.js
+- Modern JavaScript & CSS
+- UX design principles
+- Performance optimization
+
+---
+
+**Contact:** rudram.vyas@gmail.com  
+**LinkedIn:** [linkedin.com/in/rudram-vyas](https://linkedin.com/in/rudram-vyas)  
+**GitHub:** [github.com/rudramvyas](https://github.com/rudramvyas)
