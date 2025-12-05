@@ -191,6 +191,104 @@
       color: #fff;
     }
 
+    /* Auto-Collect Button */
+    .auto-collect-btn {
+      position: fixed;
+      bottom: 100px;
+      left: 30px;
+      z-index: 100;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auto-collect-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5);
+    }
+
+    .auto-collect-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .auto-collect-btn i {
+      font-size: 1rem;
+    }
+
+    .auto-collect-btn.active {
+      background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
+      50% { box-shadow: 0 6px 30px rgba(34, 197, 94, 0.6); }
+    }
+
+    /* Roaming Mode Buttons */
+    .roaming-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 100;
+      display: none;
+      gap: 15px;
+      flex-direction: column;
+    }
+
+    .roaming-buttons.show {
+      display: flex;
+    }
+
+    .roaming-btn {
+      padding: 12px 24px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .roaming-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(168, 85, 247, 0.6);
+      background: rgba(168, 85, 247, 0.1);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .roaming-btn.primary {
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .roaming-btn.primary:hover {
+      background: linear-gradient(135deg, #9333ea 0%, #2563eb 100%);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+    }
+
     /* Collected Skills */
     .collected-panel {
       bottom: 20px;
@@ -531,6 +629,28 @@
       justify-content: center;
     }
 
+    .continue-exploring-btn {
+      padding: 15px 40px;
+      background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .continue-exploring-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+    }
+
     .play-again-btn {
       padding: 15px 40px;
       background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
@@ -542,6 +662,15 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .play-again-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
     }
 
     .back-portfolio-btn {
@@ -556,6 +685,17 @@
       cursor: pointer;
       text-decoration: none;
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .back-portfolio-btn:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
     }
 
     /* Mobile Joystick */
@@ -713,6 +853,12 @@
     </div>
   </div>
 
+  <!-- Auto-Collect Button -->
+  <button class="auto-collect-btn" id="auto-collect-btn" style="display: none;">
+    <i class="fas fa-magic"></i>
+    <span>Auto Collect</span>
+  </button>
+
   <div class="game-ui collected-panel" id="collected-panel" style="display: none;">
     <div class="collected-title">Collected Skills</div>
     <div class="collected-skills" id="collected-skills"></div>
@@ -769,6 +915,9 @@
       scalable, user-friendly applications. Interested in working together?
     </p>
     <div class="win-buttons">
+      <button class="continue-exploring-btn" id="continue-exploring-btn">
+        <i class="fas fa-eye"></i> Continue Exploring
+      </button>
       <button class="play-again-btn" id="play-again-btn">
         <i class="fas fa-redo"></i> Play Again
       </button>
@@ -776,6 +925,22 @@
         <i class="fas fa-envelope"></i> Get in Touch
       </a>
     </div>
+  </div>
+
+  <!-- Roaming Mode Buttons -->
+  <div class="roaming-buttons" id="roaming-buttons">
+    <button class="roaming-btn primary" id="show-results-btn">
+      <i class="fas fa-trophy"></i>
+      View Results
+    </button>
+    <button class="roaming-btn" id="restart-roaming-btn">
+      <i class="fas fa-redo"></i>
+      Play Again
+    </button>
+    <a href="mailto:rudram.vyas@gmail.com" class="roaming-btn">
+      <i class="fas fa-envelope"></i>
+      Contact Me
+    </a>
   </div>
 
   <script>
@@ -911,8 +1076,8 @@
     // ===== CONTROLS =====
     const keys = { w: false, a: false, s: false, d: false, shift: false, space: false, capslock: false };
     const velocity = new THREE.Vector3();
-    const acceleration = 0.02;
-    const maxSpeed = 0.5;
+    const acceleration = 0.015;
+    const maxSpeed = 0.4;
     const boostMultiplier = 2;
     const friction = 0.98;
 
@@ -997,6 +1162,23 @@
     // ===== START GAME =====
     document.getElementById('start-btn').addEventListener('click', startGame);
     document.getElementById('play-again-btn').addEventListener('click', resetGame);
+    document.getElementById('restart-roaming-btn').addEventListener('click', resetGame);
+    
+    // ===== ROAMING MODE =====
+    let roamingMode = false;
+    
+    document.getElementById('continue-exploring-btn').addEventListener('click', () => {
+      winScreen.classList.remove('show');
+      roamingMode = true;
+      gameStarted = true; // Allow movement
+      document.getElementById('roaming-buttons').classList.add('show');
+    });
+    
+    document.getElementById('show-results-btn').addEventListener('click', () => {
+      roamingMode = false;
+      winScreen.classList.add('show');
+      document.getElementById('roaming-buttons').classList.remove('show');
+    });
 
     function startGame() {
       gameStarted = true;
@@ -1006,6 +1188,7 @@
       statsPanel.style.display = 'block';
       collectedPanel.style.display = 'block';
       controlsPanel.style.display = 'block';
+      document.getElementById('auto-collect-btn').style.display = 'flex';
       lastTime = performance.now();
     }
 
@@ -1030,9 +1213,115 @@
       remainingDisplay.textContent = skills.length;
       collectedSkillsContainer.innerHTML = '';
       
-      // Hide win screen, show game
+      // Hide win screen and roaming buttons, show game
       winScreen.classList.remove('show');
+      document.getElementById('roaming-buttons').classList.remove('show');
+      roamingMode = false;
       startGame();
+    }
+
+    // ===== AUTO-COLLECT FUNCTIONALITY =====
+    let autoCollecting = false;
+    let autoCollectTargetOrb = null;
+    const autoCollectSpeed = 0.3;
+    const autoCollectPauseTime = 2500; // Pause to read skill info
+    
+    document.getElementById('auto-collect-btn').addEventListener('click', toggleAutoCollect);
+    
+    function toggleAutoCollect() {
+      const btn = document.getElementById('auto-collect-btn');
+      if (autoCollecting) {
+        autoCollecting = false;
+        autoCollectTargetOrb = null;
+        btn.classList.remove('active');
+        btn.innerHTML = '<i class="fas fa-magic"></i><span>Auto Collect</span>';
+      } else {
+        autoCollecting = true;
+        btn.classList.add('active');
+        btn.innerHTML = '<i class="fas fa-stop-circle"></i><span>Stop</span>';
+        findNextOrbToCollect();
+      }
+    }
+    
+    function findNextOrbToCollect() {
+      if (!autoCollecting || skillOrbs.length === 0) {
+        autoCollecting = false;
+        const btn = document.getElementById('auto-collect-btn');
+        btn.classList.remove('active');
+        btn.innerHTML = '<i class="fas fa-magic"></i><span>Auto Collect</span>';
+        return;
+      }
+      
+      // Find nearest orb that hasn't been collected
+      let nearest = null;
+      let nearestDist = Infinity;
+      
+      skillOrbs.forEach(orb => {
+        if (!orb.userData.collected) {
+          const dist = player.position.distanceTo(orb.position);
+          if (dist < nearestDist) {
+            nearestDist = dist;
+            nearest = orb;
+          }
+        }
+      });
+      
+      autoCollectTargetOrb = nearest;
+    }
+    
+    function updateAutoCollect() {
+      if (!autoCollecting || !autoCollectTargetOrb) return;
+      
+      const direction = new THREE.Vector3()
+        .subVectors(autoCollectTargetOrb.position, player.position)
+        .normalize();
+      
+      const distance = player.position.distanceTo(autoCollectTargetOrb.position);
+      
+      if (distance < 2.5) {
+        // Collect the orb
+        const skill = autoCollectTargetOrb.userData.skill;
+        
+        // Mark as collected
+        autoCollectTargetOrb.userData.collected = true;
+        
+        // Update score
+        score += skill.points;
+        collected++;
+        scoreDisplay.textContent = collected;
+        remainingDisplay.textContent = skills.length - collected;
+        
+        // Show popup and add to UI
+        showSkillPopup(skill);
+        addCollectedSkill(skill);
+        
+        // Remove orb from scene
+        orbGroup.remove(autoCollectTargetOrb);
+        const index = skillOrbs.indexOf(autoCollectTargetOrb);
+        if (index !== -1) {
+          skillOrbs.splice(index, 1);
+        }
+        
+        // Check win
+        if (collected >= skills.length) {
+          checkWin();
+          return;
+        }
+        
+        // Pause before moving to next orb
+        autoCollectTargetOrb = null;
+        setTimeout(() => {
+          if (autoCollecting) {
+            findNextOrbToCollect();
+          }
+        }, autoCollectPauseTime);
+      } else {
+        // Move towards orb
+        velocity.copy(direction).multiplyScalar(autoCollectSpeed);
+        player.position.add(velocity);
+        player.rotation.x += direction.z * 0.05;
+        player.rotation.z -= direction.x * 0.05;
+      }
     }
 
     // ===== SHOW SKILL POPUP =====
@@ -1054,19 +1343,111 @@
       collectedSkillsContainer.appendChild(skillEl);
     }
 
+    // ===== FINISHING EFFECTS =====
+    function createFinishingEffects() {
+      // Create colorful particle explosion
+      const particleCount = 100;
+      const particles = [];
+      const particleGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+      
+      for (let i = 0; i < particleCount; i++) {
+        const colors = [0xa855f7, 0x3b82f6, 0x06b6d4, 0x22c55e, 0xfbbf24, 0xec4899];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const material = new THREE.MeshBasicMaterial({ color, transparent: true });
+        const particle = new THREE.Mesh(particleGeometry, material);
+        
+        particle.position.copy(player.position);
+        particle.userData = {
+          velocity: new THREE.Vector3(
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2
+          ).multiplyScalar(0.5),
+          life: 1.0
+        };
+        
+        scene.add(particle);
+        particles.push(particle);
+      }
+      
+      // Animate particles
+      const animateParticles = () => {
+        let allDead = true;
+        particles.forEach(particle => {
+          if (particle.userData.life > 0) {
+            allDead = false;
+            particle.position.add(particle.userData.velocity);
+            particle.userData.velocity.y -= 0.01; // Gravity
+            particle.userData.life -= 0.02;
+            particle.material.opacity = particle.userData.life;
+            particle.scale.set(particle.userData.life, particle.userData.life, particle.userData.life);
+          }
+        });
+        
+        if (!allDead) {
+          requestAnimationFrame(animateParticles);
+        } else {
+          particles.forEach(p => scene.remove(p));
+        }
+      };
+      animateParticles();
+      
+      // Screen flash effect
+      const flash = document.createElement('div');
+      flash.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+        z-index: 150;
+        pointer-events: none;
+        animation: flashFade 1s ease-out forwards;
+      `;
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 1000);
+      
+      // Add flash animation
+      if (!document.getElementById('flash-animation')) {
+        const style = document.createElement('style');
+        style.id = 'flash-animation';
+        style.textContent = `
+          @keyframes flashFade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+
     // ===== CHECK WIN =====
     function checkWin() {
       if (collected >= skills.length) {
-        gameStarted = false;
-        document.getElementById('final-score').textContent = score;
-        winScreen.classList.add('show');
+        // Stop auto-collect if active
+        if (autoCollecting) {
+          autoCollecting = false;
+          autoCollectTargetOrb = null;
+          const btn = document.getElementById('auto-collect-btn');
+          btn.classList.remove('active');
+          btn.innerHTML = '<i class="fas fa-magic"></i><span>Auto Collect</span>';
+        }
         
-        // Hide game UI
-        gameUI.style.display = 'none';
-        scorePanel.style.display = 'none';
-        statsPanel.style.display = 'none';
-        collectedPanel.style.display = 'none';
-        controlsPanel.style.display = 'none';
+        // Create finishing effects
+        createFinishingEffects();
+        
+        // Wait longer for effects before showing win screen
+        setTimeout(() => {
+          gameStarted = false;
+          document.getElementById('final-score').textContent = score;
+          winScreen.classList.add('show');
+          
+          // Hide game UI
+          gameUI.style.display = 'none';
+          scorePanel.style.display = 'none';
+          statsPanel.style.display = 'none';
+          collectedPanel.style.display = 'none';
+          controlsPanel.style.display = 'none';
+          document.getElementById('auto-collect-btn').style.display = 'none';
+        }, 2500); // Increased from 800ms to 2500ms
       }
     }
 
@@ -1084,49 +1465,55 @@
         const seconds = Math.floor(gameTime % 60);
         timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-        // Apply movement
-        const boost = keys.capslock ? boostMultiplier : 1;
-        speedDisplay.textContent = keys.capslock ? 'BOOST!' : 'Normal';
-        
-        // Keyboard controls
-        if (keys.w) velocity.z -= acceleration * boost;
-        if (keys.s) velocity.z += acceleration * boost;
-        if (keys.a) velocity.x -= acceleration * boost;
-        if (keys.d) velocity.x += acceleration * boost;
-        if (keys.space) velocity.y += acceleration * boost * 0.5;
-        if (keys.shift) velocity.y -= acceleration * boost * 0.5;
-        
-        // Mobile controls
-        if (joystickActive) {
-          velocity.x += joystickX * acceleration * 2;
-          velocity.z += joystickY * acceleration * 2;
+        // Auto-collect or manual movement
+        if (autoCollecting) {
+          updateAutoCollect();
+        } else {
+          // Apply movement
+          const boost = keys.capslock ? boostMultiplier : 1;
+          speedDisplay.textContent = keys.capslock ? 'BOOST!' : 'Normal';
+          
+          // Keyboard controls
+          if (keys.w) velocity.z -= acceleration * boost;
+          if (keys.s) velocity.z += acceleration * boost;
+          if (keys.a) velocity.x -= acceleration * boost;
+          if (keys.d) velocity.x += acceleration * boost;
+          if (keys.space) velocity.y += acceleration * boost * 0.5;
+          if (keys.shift) velocity.y -= acceleration * boost * 0.5;
+          
+          // Mobile controls
+          if (joystickActive) {
+            velocity.x += joystickX * acceleration * 2;
+            velocity.z += joystickY * acceleration * 2;
+          }
+          
+          // Clamp velocity
+          velocity.clampLength(0, maxSpeed * boost);
+          
+          // Apply friction
+          velocity.multiplyScalar(friction);
+          
+          // Update player position
+          player.position.add(velocity);
+          
+          // Keep player in bounds
+          player.position.clamp(
+            new THREE.Vector3(-60, -30, -60),
+            new THREE.Vector3(60, 30, 60)
+          );
+          
+          // Player rotation based on velocity
+          player.rotation.x += velocity.z * 0.1;
+          player.rotation.z -= velocity.x * 0.1;
         }
-        
-        // Clamp velocity
-        velocity.clampLength(0, maxSpeed * boost);
-        
-        // Apply friction
-        velocity.multiplyScalar(friction);
-        
-        // Update player position
-        player.position.add(velocity);
-        
-        // Keep player in bounds
-        player.position.clamp(
-          new THREE.Vector3(-60, -30, -60),
-          new THREE.Vector3(60, 30, 60)
-        );
-        
-        // Player rotation based on velocity
-        player.rotation.x += velocity.z * 0.1;
-        player.rotation.z -= velocity.x * 0.1;
 
-        // Check collisions with orbs
-        skillOrbs.forEach((orb) => {
-          if (!orb.userData.collected) {
-            const distance = player.position.distanceTo(orb.position);
-            if (distance < 2.5) {
-              orb.userData.collected = true;
+        // Check collisions with orbs (only when not auto-collecting)
+        if (!autoCollecting) {
+          skillOrbs.forEach((orb) => {
+            if (!orb.userData.collected) {
+              const distance = player.position.distanceTo(orb.position);
+              if (distance < 2.5) {
+                orb.userData.collected = true;
               collected++;
               score += orb.userData.skill.points;
               
@@ -1156,7 +1543,8 @@
               checkWin();
             }
           }
-        });
+          });
+        }
 
         // Camera follow
         const targetCameraPos = player.position.clone().add(cameraOffset);

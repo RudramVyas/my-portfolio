@@ -1299,6 +1299,14 @@
       }
       panelLink.href = link;
       
+      // Update button text and icon based on link type
+      const isExternalLink = link && (link.startsWith('http://') || link.startsWith('https://') || link.startsWith('mailto:'));
+      if (isExternalLink) {
+        panelLink.innerHTML = 'Open Link <i class="fas fa-external-link-alt"></i>';
+      } else {
+        panelLink.innerHTML = 'View Full Section <i class="fas fa-arrow-right"></i>';
+      }
+      
       infoPanel.classList.add('show');
       infoPanelOpen = true;
       
