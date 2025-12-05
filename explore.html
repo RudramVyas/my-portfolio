@@ -778,10 +778,8 @@
   <div class="controls-hint" id="controls-hint" style="display: none;">
     <div class="controls-title">Navigation</div>
     <div class="control-row">
-      <span class="key">W</span>
-      <span class="key">A</span>
-      <span class="key">S</span>
-      <span class="key">D</span>
+      <span class="key">WASD</span>
+      <span class="key">↑←↓→</span>
       <span>Move</span>
     </div>
     <div class="control-row">
@@ -1171,10 +1169,10 @@
     const groundLevel = 2;
 
     document.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'w') keys.w = true;
-      if (e.key.toLowerCase() === 'a') keys.a = true;
-      if (e.key.toLowerCase() === 's') keys.s = true;
-      if (e.key.toLowerCase() === 'd') keys.d = true;
+      if (e.key.toLowerCase() === 'w' || e.key === 'ArrowUp') keys.w = true;
+      if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') keys.a = true;
+      if (e.key.toLowerCase() === 's' || e.key === 'ArrowDown') keys.s = true;
+      if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') keys.d = true;
       if (e.key === ' ') {
         e.preventDefault(); // Prevent page scroll
         keys.space = true;
@@ -1189,10 +1187,10 @@
     });
 
     document.addEventListener('keyup', (e) => {
-      if (e.key.toLowerCase() === 'w') keys.w = false;
-      if (e.key.toLowerCase() === 'a') keys.a = false;
-      if (e.key.toLowerCase() === 's') keys.s = false;
-      if (e.key.toLowerCase() === 'd') keys.d = false;
+      if (e.key.toLowerCase() === 'w' || e.key === 'ArrowUp') keys.w = false;
+      if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') keys.a = false;
+      if (e.key.toLowerCase() === 's' || e.key === 'ArrowDown') keys.s = false;
+      if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') keys.d = false;
       if (e.key === ' ') keys.space = false;
       if (e.key === 'Shift') keys.shift = false;
     });
