@@ -695,9 +695,18 @@
     }
 
     /* Ensure content is above canvas */
-    nav, section, footer, #mobile-menu-overlay {
+    nav, section, footer {
       position: relative;
       z-index: 10;
+    }
+    
+    /* Mobile menu should be above everything */
+    #mobile-menu-overlay {
+      z-index: 100;
+    }
+    
+    #mobile-menu {
+      z-index: 110;
     }
 
     /* Light mode 3D adjustments */
@@ -797,52 +806,57 @@
   </nav>
 
   <!-- Mobile Menu Overlay -->
-  <div id="mobile-menu-overlay" class="fixed inset-0 z-40 lg:hidden hidden">
-    <div id="mobile-menu" class="fixed right-0 top-0 bottom-0 w-72 glass border-l border-white/10 transform translate-x-full transition-transform duration-300 ease-out">
-      <div class="flex flex-col h-full pt-20 px-6 pb-6">
+  <div id="mobile-menu-overlay" class="fixed inset-0 lg:hidden hidden">
+    <div id="mobile-menu" class="fixed right-0 top-0 bottom-0 w-72 glass border-l border-white/10 transform translate-x-full transition-transform duration-300 ease-out overflow-y-auto">
+      <div class="flex flex-col min-h-full pt-20 px-6 pb-6">
         <nav class="flex-1 space-y-2">
           <a href="#home" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-            <i class="fas fa-home w-5"></i>
-            Home
+            <i class="fas fa-home w-5 text-center"></i>
+            <span>Home</span>
           </a>
           <a href="#experience" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-            <i class="fas fa-briefcase w-5"></i>
-            Experience
+            <i class="fas fa-briefcase w-5 text-center"></i>
+            <span>Experience</span>
           </a>
           <a href="#projects" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-            <i class="fas fa-code w-5"></i>
-            Projects
+            <i class="fas fa-code w-5 text-center"></i>
+            <span>Projects</span>
           </a>
           <a href="#skills" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-            <i class="fas fa-graduation-cap w-5"></i>
-            Skills
+            <i class="fas fa-graduation-cap w-5 text-center"></i>
+            <span>Skills</span>
           </a>
           <a href="#contact" class="mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-            <i class="fas fa-envelope w-5"></i>
-            Contact
+            <i class="fas fa-envelope w-5 text-center"></i>
+            <span>Contact</span>
           </a>
+          
+          <div class="h-px bg-white/10 my-3"></div>
+          
           <a href="game.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-purple-400 hover:text-purple-300 border border-purple-500/20 transition-all">
-            <i class="fas fa-gamepad w-5"></i>
-            Play Game
+            <i class="fas fa-gamepad w-5 text-center"></i>
+            <span>Play Game</span>
           </a>
           <a href="explore.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-blue-600/20 to-cyan-600/20 text-blue-400 hover:text-blue-300 border border-blue-500/20 transition-all">
-            <i class="fas fa-cube w-5"></i>
-            Explore 3D
+            <i class="fas fa-cube w-5 text-center"></i>
+            <span>Explore 3D</span>
           </a>
         </nav>
         
-        <!-- Mobile Theme Toggle -->
-        <button id="mobile-theme-toggle" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all mb-4 w-full">
-          <i class="fas fa-moon mobile-icon-moon w-5"></i>
-          <i class="fas fa-sun mobile-icon-sun w-5 hidden"></i>
-          <span class="mobile-theme-text">Light Mode</span>
-        </button>
-        
-        <!-- Mobile CTA -->
-        <a href="mailto:rudram.vyas@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all shadow-lg shadow-purple-500/20">
-          <i class="fas fa-paper-plane"></i>
-          Send Message
-        </a>
+        <div class="mt-auto pt-4 space-y-3">
+          <!-- Mobile Theme Toggle -->
+          <button id="mobile-theme-toggle" class="flex items-center justify-start gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all w-full">
+            <i class="fas fa-moon mobile-icon-moon w-5 text-center"></i>
+            <i class="fas fa-sun mobile-icon-sun w-5 text-center hidden"></i>
+            <span class="mobile-theme-text">Light Mode</span>
+          </button>
+          
+          <!-- Mobile CTA -->
+          <a href="mailto:rudram.vyas@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all shadow-lg shadow-purple-500/20">
+            <i class="fas fa-paper-plane"></i>
+            <span>Send Message</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
