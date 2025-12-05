@@ -785,6 +785,14 @@
       <span>Move</span>
     </div>
     <div class="control-row">
+      <span class="key">SPACE</span>
+      <span>Jump</span>
+    </div>
+    <div class="control-row">
+      <span class="key">SHIFT</span>
+      <span>Dash</span>
+    </div>
+    <div class="control-row">
       <span class="key">MOUSE</span>
       <span>Look around</span>
     </div>
@@ -825,7 +833,7 @@
       <button class="close-panel-btn" id="close-panel">
         <i class="fas fa-times"></i> Close
       </button>
-      <a href="index.html#experience" class="panel-link" id="panel-link">
+      <a href="index.html#experience" class="panel-link" id="panel-link" target="_blank" rel="noopener noreferrer">
         View Full Section <i class="fas fa-arrow-right"></i>
       </a>
     </div>
@@ -1153,15 +1161,25 @@
     let yaw = 0, pitch = 0;
     let isLocked = false;
 
-    const keys = { w: false, a: false, s: false, d: false };
+    const keys = { w: false, a: false, s: false, d: false, space: false, shift: false };
     const velocity = new THREE.Vector3();
     const moveSpeed = 0.15;
+    const boostMultiplier = 2;
+    const jumpForce = 0.25;
+    const gravity = 0.008;
+    let verticalVelocity = 0;
+    const groundLevel = 2;
 
     document.addEventListener('keydown', (e) => {
       if (e.key.toLowerCase() === 'w') keys.w = true;
       if (e.key.toLowerCase() === 'a') keys.a = true;
       if (e.key.toLowerCase() === 's') keys.s = true;
       if (e.key.toLowerCase() === 'd') keys.d = true;
+      if (e.key === ' ') {
+        e.preventDefault(); // Prevent page scroll
+        keys.space = true;
+      }
+      if (e.key === 'Shift') keys.shift = true;
       if (e.key === 'Escape') {
         closeInfoPanel();
         if (document.pointerLockElement) {
@@ -1175,6 +1193,8 @@
       if (e.key.toLowerCase() === 'a') keys.a = false;
       if (e.key.toLowerCase() === 's') keys.s = false;
       if (e.key.toLowerCase() === 'd') keys.d = false;
+      if (e.key === ' ') keys.space = false;
+      if (e.key === 'Shift') keys.shift = false;
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -1252,7 +1272,13 @@
       panelTags.innerHTML = data.tags.map((tag, i) => 
         `<span class="info-tag ${i % 2 === 0 ? '' : 'blue'}">${tag}</span>`
       ).join('');
-      panelLink.href = data.link || sectionLink;
+      
+      // Fix relative links to point to index.html
+      let link = data.link || sectionLink;
+      if (link && link.startsWith('#')) {
+        link = 'index.html' + link;
+      }
+      panelLink.href = link;
       
       infoPanel.classList.add('show');
       infoPanelOpen = true;
@@ -1355,18 +1381,37 @@
           
           right.crossVectors(forward, new THREE.Vector3(0, 1, 0));
           
+          // Movement with boost
+          const boost = keys.shift ? boostMultiplier : 1;
+          const currentSpeed = moveSpeed * boost;
+          
           velocity.set(0, 0, 0);
-          if (keys.w) velocity.add(forward.multiplyScalar(moveSpeed));
-          if (keys.s) velocity.sub(forward.multiplyScalar(moveSpeed));
-          if (keys.d) velocity.add(right.multiplyScalar(moveSpeed));
-          if (keys.a) velocity.sub(right.multiplyScalar(moveSpeed));
+          if (keys.w) velocity.add(forward.multiplyScalar(currentSpeed));
+          if (keys.s) velocity.sub(forward.multiplyScalar(currentSpeed));
+          if (keys.d) velocity.add(right.multiplyScalar(currentSpeed));
+          if (keys.a) velocity.sub(right.multiplyScalar(currentSpeed));
           
           camera.position.add(velocity);
+          
+          // Jump mechanics
+          if (keys.space && camera.position.y <= groundLevel + 0.1) {
+            verticalVelocity = jumpForce;
+          }
+          
+          // Apply gravity
+          verticalVelocity -= gravity;
+          camera.position.y += verticalVelocity;
+          
+          // Ground collision
+          if (camera.position.y < groundLevel) {
+            camera.position.y = groundLevel;
+            verticalVelocity = 0;
+          }
           
           // Boundaries
           camera.position.x = Math.max(-45, Math.min(45, camera.position.x));
           camera.position.z = Math.max(-45, Math.min(50, camera.position.z));
-          camera.position.y = 2;
+          camera.position.y = Math.max(1, Math.min(10, camera.position.y)); // Height limits
           
           updateHover();
         }
