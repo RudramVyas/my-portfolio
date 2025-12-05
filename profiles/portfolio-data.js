@@ -354,12 +354,12 @@ const PORTFOLIO_DATA = {
       }
     ],
     skills: [
-      { id: "csharp", title: "C#", subtitle: "Primary Language", content: "Core language for enterprise ASP.NET development at AllianceHCM. Used for backend logic, data processing, and integration.", tags: ["Backend", "Enterprise"], icon: "fa-hashtag" },
-      { id: "javascript", title: "JavaScript", subtitle: "Frontend & Backend", content: "Extensive use across 500+ pages, from DOM manipulation to complex UI interactions and Node.js backends.", tags: ["Frontend", "Backend", "Full-Stack"], icon: "fa-js" },
-      { id: "react", title: "React", subtitle: "UI Framework", content: "Led complete redesign at ShopR, implementing modern component architecture and state management.", tags: ["Frontend", "UI/UX"], icon: "fa-react" },
-      { id: "python", title: "Python", subtitle: "ML & Scripting", content: "Used for machine learning projects including MRI classification and computer vision applications.", tags: ["ML", "Data Science"], icon: "fa-python" },
-      { id: "sql", title: "SQL Server", subtitle: "Database", content: "Optimized complex payroll queries and stored procedures handling millions of records.", tags: ["Database", "Enterprise"], icon: "fa-database" },
-      { id: "aws", title: "AWS", subtitle: "Cloud Platform", content: "Cloud infrastructure knowledge for scalable application deployments and services.", tags: ["Cloud", "DevOps"], icon: "fa-aws" }
+      { id: "csharp", title: "C#", subtitle: "Primary Language", content: "Core language for enterprise ASP.NET development at AllianceHCM. Used for backend logic, data processing, and integration.", tags: ["Backend", "Enterprise"], icon: "fa-hashtag", link: "#skills" },
+      { id: "javascript", title: "JavaScript", subtitle: "Frontend & Backend", content: "Extensive use across 500+ pages, from DOM manipulation to complex UI interactions and Node.js backends.", tags: ["Frontend", "Backend", "Full-Stack"], icon: "fa-js", link: "#skills" },
+      { id: "react", title: "React", subtitle: "UI Framework", content: "Led complete redesign at ShopR, implementing modern component architecture and state management.", tags: ["Frontend", "UI/UX"], icon: "fa-react", link: "#skills" },
+      { id: "python", title: "Python", subtitle: "ML & Scripting", content: "Used for machine learning projects including MRI classification and computer vision applications.", tags: ["ML", "Data Science"], icon: "fa-python", link: "#skills" },
+      { id: "sql", title: "SQL Server", subtitle: "Database", content: "Optimized complex payroll queries and stored procedures handling millions of records.", tags: ["Database", "Enterprise"], icon: "fa-database", link: "#skills" },
+      { id: "aws", title: "AWS", subtitle: "Cloud Platform", content: "Cloud infrastructure knowledge for scalable application deployments and services.", tags: ["Cloud", "DevOps"], icon: "fa-aws", link: "#skills" }
     ],
     education: [
       {

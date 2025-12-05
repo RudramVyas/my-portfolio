@@ -1275,6 +1275,9 @@
       
       infoPanel.classList.add('show');
       infoPanelOpen = true;
+      
+      // Hide interact prompt when panel is open
+      document.getElementById('interact-prompt').classList.remove('show');
     }
 
     function closeInfoPanel() {

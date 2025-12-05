@@ -1082,9 +1082,6 @@
           velocity.z += joystickY * acceleration * 2;
         }
         
-        // Apply gravity
-        velocity.y -= 0.005;
-        
         // Clamp velocity
         velocity.clampLength(0, maxSpeed * boost);
         
