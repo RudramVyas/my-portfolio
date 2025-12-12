@@ -619,16 +619,157 @@
       border-color: rgba(168, 85, 247, 0.4);
     }
 
+    /* Mobile Controls */
+    .mobile-controls {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 100;
+    }
+
+    .joystick-base {
+      width: 110px;
+      height: 110px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      position: relative;
+      touch-action: none;
+    }
+
+    .joystick-stick {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      touch-action: none;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    }
+
+    /* Mobile Action Buttons */
+    .mobile-action-buttons {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      gap: 12px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .mobile-action-btn {
+      width: 65px;
+      height: 65px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .mobile-action-btn:active {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.5);
+      transform: scale(0.95);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .mobile-action-btn.dash {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .mobile-action-btn.dash:active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(59, 130, 246, 0.4));
+    }
+
+    .mobile-action-btn-label {
+      font-size: 0.65rem;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    /* Mobile Hamburger Menu */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 120;
+      width: 45px;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .mobile-ui-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 280px;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 110;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      padding: 80px 20px 20px;
+    }
+
+    .mobile-ui-panel.open {
+      transform: translateX(0);
+    }
+
     /* Mobile Warning */
     @media (max-width: 768px) {
-      .controls-hint {
-        display: none;
+      .mobile-controls {
+        display: block;
       }
 
-      .mini-map {
-        width: 120px;
-        height: 120px;
-        padding: 10px;
+      .mobile-action-buttons {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .controls-hint {
+        display: none !important;
+      }
+
+      .mini-map,
+      .mall-header {
+        display: none;
       }
 
       .zone-preview {
@@ -841,6 +982,44 @@
         View Full Section <i class="fas fa-arrow-right"></i>
       </a>
     </div>
+  </div>
+
+  <!-- Mobile Hamburger Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn" style="display: none;">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Mobile UI Panel -->
+  <div class="mobile-ui-panel" id="mobile-ui-panel">
+    <div style="margin-bottom: 15px;">
+      <h3 style="font-size: 0.9rem; color: #a855f7; margin-bottom: 10px;">Info</h3>
+      <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">
+        Use joystick to move, tap orbs to learn more, or use the mini-map to navigate zones.
+      </p>
+    </div>
+  </div>
+
+  <!-- Mobile Joystick -->
+  <div class="mobile-controls" id="mobile-controls">
+    <div class="joystick-base" id="joystick-base">
+      <div class="joystick-stick" id="joystick-stick"></div>
+    </div>
+  </div>
+
+  <!-- Mobile Action Buttons -->
+  <div class="mobile-action-buttons" id="mobile-action-buttons">
+    <button class="mobile-action-btn dash" id="mobile-dash-btn" data-action="dash">
+      <div style="text-align: center;">
+        <i class="fas fa-running"></i>
+        <div class="mobile-action-btn-label">DASH</div>
+      </div>
+    </button>
+    <button class="mobile-action-btn" id="mobile-jump-btn" data-action="jump">
+      <div style="text-align: center;">
+        <i class="fas fa-arrow-up"></i>
+        <div class="mobile-action-btn-label">JUMP</div>
+      </div>
+    </button>
   </div>
 
   <script>
@@ -1389,6 +1568,100 @@
         canvas.requestPointerLock();
       }, 100);
     });
+
+    // ===== MOBILE CONTROLS =====
+    // Mobile joystick
+    const joystickBase = document.getElementById('joystick-base');
+    const joystickStick = document.getElementById('joystick-stick');
+    let joystickActive = false;
+    let joystickX = 0, joystickY = 0;
+
+    if (joystickBase) {
+      joystickBase.addEventListener('touchstart', (e) => {
+        joystickActive = true;
+        e.preventDefault();
+      });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!joystickActive) return;
+        const touch = e.touches[0];
+        const rect = joystickBase.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        joystickX = (touch.clientX - centerX) / (rect.width / 2);
+        joystickY = (touch.clientY - centerY) / (rect.height / 2);
+        
+        joystickX = Math.max(-1, Math.min(1, joystickX));
+        joystickY = Math.max(-1, Math.min(1, joystickY));
+        
+        joystickStick.style.transform = `translate(calc(-50% + ${joystickX * 30}px), calc(-50% + ${joystickY * 30}px))`;
+        
+        // Update keys based on joystick
+        keys.w = joystickY < -0.3;
+        keys.s = joystickY > 0.3;
+        keys.a = joystickX < -0.3;
+        keys.d = joystickX > 0.3;
+      });
+
+      document.addEventListener('touchend', (e) => {
+        if (!joystickActive) return;
+        joystickActive = false;
+        joystickX = 0;
+        joystickY = 0;
+        joystickStick.style.transform = 'translate(-50%, -50%)';
+        keys.w = keys.a = keys.s = keys.d = false;
+      });
+    }
+
+    // Mobile action buttons
+    const mobileJumpBtn = document.getElementById('mobile-jump-btn');
+    const mobileDashBtn = document.getElementById('mobile-dash-btn');
+
+    if (mobileJumpBtn) {
+      mobileJumpBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.space = true;
+      });
+      mobileJumpBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.space = false;
+      });
+    }
+
+    if (mobileDashBtn) {
+      mobileDashBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.shift = true;
+      });
+      mobileDashBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.shift = false;
+      });
+    }
+
+    // Mobile hamburger menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileUIPanel = document.getElementById('mobile-ui-panel');
+    
+    if (mobileMenuBtn && mobileUIPanel) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileUIPanel.classList.toggle('open');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+
+      // Close panel when clicking outside (on canvas)
+      document.addEventListener('click', (e) => {
+        if (!mobileUIPanel.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileUIPanel.classList.contains('open')) {
+          mobileUIPanel.classList.remove('open');
+          const icon = mobileMenuBtn.querySelector('i');
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+    }
 
     // ===== ANIMATION LOOP =====
     function animate() {

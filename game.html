@@ -697,58 +697,167 @@
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
     }
 
-    /* Mobile Joystick */
+    /* Mobile Controls */
     .mobile-controls {
       display: none;
       position: fixed;
-      bottom: 30px;
-      left: 30px;
+      bottom: 20px;
+      left: 20px;
       z-index: 100;
     }
 
     .joystick-base {
-      width: 120px;
-      height: 120px;
-      background: rgba(255, 255, 255, 0.1);
+      width: 110px;
+      height: 110px;
+      background: rgba(255, 255, 255, 0.08);
       border: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       position: relative;
+      touch-action: none;
     }
 
     .joystick-stick {
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
       border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      cursor: grab;
+      touch-action: none;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    }
+
+    /* Mobile Action Buttons */
+    .mobile-action-buttons {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      gap: 12px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .mobile-action-btn {
+      width: 65px;
+      height: 65px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .mobile-action-btn:active {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.5);
+      transform: scale(0.95);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .mobile-action-btn.boost {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .mobile-action-btn.boost:active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(59, 130, 246, 0.4));
+    }
+
+    .mobile-action-btn-label {
+      font-size: 0.65rem;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    /* Mobile Hamburger Menu */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 120;
+      width: 45px;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .mobile-ui-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 280px;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 110;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      padding: 80px 20px 20px;
+    }
+
+    .mobile-ui-panel.open {
+      transform: translateX(0);
     }
 
     @media (max-width: 768px) {
       .mobile-controls {
         display: block;
       }
+
+      .mobile-action-buttons {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       
       .controls-panel {
+        display: none !important;
+      }
+
+      .stats-panel,
+      .collected-panel,
+      .auto-collect-btn {
         display: none;
       }
 
-      .stats-panel {
-        top: 80px;
-        right: 15px;
-        min-width: 150px;
-        padding: 15px;
+      .stats-panel.mobile-visible,
+      .collected-panel.mobile-visible,
+      .auto-collect-btn.mobile-visible {
+        display: block;
+        position: static;
+        margin-bottom: 15px;
       }
-
-      .collected-panel {
-        bottom: 160px;
-        left: 15px;
-        right: 15px;
       }
-    }
 
     /* Responsive */
     @media (max-width: 480px) {
@@ -881,11 +990,45 @@
     </div>
   </div>
 
+  <!-- Mobile Hamburger Button -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn" style="display: none;">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Mobile UI Panel -->
+  <div class="mobile-ui-panel" id="mobile-ui-panel">
+    <div id="mobile-stats-container"></div>
+    <div id="mobile-collected-container"></div>
+    <div id="mobile-autocollect-container"></div>
+  </div>
+
   <!-- Mobile Joystick -->
   <div class="mobile-controls" id="mobile-controls">
     <div class="joystick-base" id="joystick-base">
       <div class="joystick-stick" id="joystick-stick"></div>
     </div>
+  </div>
+
+  <!-- Mobile Action Buttons -->
+  <div class="mobile-action-buttons" id="mobile-action-buttons">
+    <button class="mobile-action-btn boost" id="mobile-boost-btn" data-action="boost">
+      <div style="text-align: center;">
+        <i class="fas fa-rocket"></i>
+        <div class="mobile-action-btn-label">BOOST</div>
+      </div>
+    </button>
+    <button class="mobile-action-btn" id="mobile-rise-btn" data-action="rise">
+      <div style="text-align: center;">
+        <i class="fas fa-arrow-up"></i>
+        <div class="mobile-action-btn-label">RISE</div>
+      </div>
+    </button>
+    <button class="mobile-action-btn" id="mobile-descend-btn" data-action="descend">
+      <div style="text-align: center;">
+        <i class="fas fa-arrow-down"></i>
+        <div class="mobile-action-btn-label">DESCEND</div>
+      </div>
+    </button>
   </div>
 
   <!-- Skill Popup -->
@@ -1128,6 +1271,99 @@
       });
     }
 
+    // Mobile action buttons
+    const mobileRiseBtn = document.getElementById('mobile-rise-btn');
+    const mobileDescendBtn = document.getElementById('mobile-descend-btn');
+    const mobileBoostBtn = document.getElementById('mobile-boost-btn');
+
+    if (mobileRiseBtn) {
+      mobileRiseBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.space = true;
+      });
+      mobileRiseBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.space = false;
+      });
+    }
+
+    if (mobileDescendBtn) {
+      mobileDescendBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.shift = true;
+      });
+      mobileDescendBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.shift = false;
+      });
+    }
+
+    if (mobileBoostBtn) {
+      mobileBoostBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.capslock = true;
+      });
+      mobileBoostBtn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.capslock = false;
+      });
+    }
+
+    // Mobile hamburger menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileUIPanel = document.getElementById('mobile-ui-panel');
+    
+    if (mobileMenuBtn && mobileUIPanel) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileUIPanel.classList.toggle('open');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+
+      // Close panel when clicking outside (on canvas)
+      document.addEventListener('click', (e) => {
+        if (!mobileUIPanel.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileUIPanel.classList.contains('open')) {
+          mobileUIPanel.classList.remove('open');
+          const icon = mobileMenuBtn.querySelector('i');
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+    }
+
+    // Move UI panels to mobile menu on small screens
+    function setupMobileUI() {
+      if (window.innerWidth <= 768) {
+        const statsPanel = document.getElementById('stats-panel');
+        const collectedPanel = document.getElementById('collected-panel');
+        const autoCollectBtn = document.getElementById('auto-collect-btn');
+        const mobileStatsContainer = document.getElementById('mobile-stats-container');
+        const mobileCollectedContainer = document.getElementById('mobile-collected-container');
+        const mobileAutoCollectContainer = document.getElementById('mobile-autocollect-container');
+
+        if (statsPanel && mobileStatsContainer) {
+          mobileStatsContainer.appendChild(statsPanel.cloneNode(true));
+          statsPanel.style.display = 'none';
+        }
+        if (collectedPanel && mobileCollectedContainer) {
+          mobileCollectedContainer.appendChild(collectedPanel.cloneNode(true));
+          collectedPanel.style.display = 'none';
+        }
+        if (autoCollectBtn && mobileAutoCollectContainer) {
+          const clonedBtn = autoCollectBtn.cloneNode(true);
+          clonedBtn.style.position = 'static';
+          clonedBtn.style.width = '100%';
+          clonedBtn.style.marginBottom = '15px';
+          mobileAutoCollectContainer.appendChild(clonedBtn);
+          autoCollectBtn.style.display = 'none';
+          
+          // Re-attach event listener
+          clonedBtn.addEventListener('click', toggleAutoCollect);
+        }
+      }
+    }
+
     // ===== CAMERA FOLLOW =====
     const cameraOffset = new THREE.Vector3(0, 5, 15);
     camera.position.copy(player.position).add(cameraOffset);
@@ -1180,6 +1416,7 @@
       collectedPanel.style.display = 'block';
       controlsPanel.style.display = 'block';
       document.getElementById('auto-collect-btn').style.display = 'flex';
+      setupMobileUI();
       lastTime = performance.now();
     }
 
